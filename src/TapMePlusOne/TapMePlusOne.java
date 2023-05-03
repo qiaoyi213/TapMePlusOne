@@ -13,26 +13,12 @@ public class TapMePlusOne extends Application{
 		primaryStage.setTitle("Tap Me +1");
 		primaryStage.show();
 		game.padding();
+		game.showPad();
+		
 		//game.drawPad();
 		
 	}
 	public static void main(String[] args) {
-		/*
-		Scanner s = new Scanner(System.in);
-		Game game = new Game();
-		game.showPad();
-		System.out.print("Please input what position you click: ");
-		int posI, posJ;
-		posI = s.nextInt();
-		posJ = s.nextInt();
-		game.showPad();
-		System.out.println("---");
-		game.click(posI, posJ);
-		game.showPad();
-		System.out.println("---");
-		game.scan();
-		game.showPad();
-		*/
 		
 		launch(args);
 	}
