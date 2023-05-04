@@ -32,6 +32,7 @@ public class Game {
 	private TButton[][] pad;
 	private boolean[][] vis;
 	private Pane pane;
+	Text score;
 	private Scene mainScene;
 	private Direction[][] e;
 	Stack<Character>[][] moving;
@@ -64,13 +65,9 @@ public class Game {
 	        Optional<ButtonType> result = alert.showAndWait();
 
 	        // 根據使用者選擇的 ButtonType 來做不同的處理
-	        if (result.isPresent() && result.get() == continueBtn) {
-	            // 如果使用者選擇了 "continue"，則繼續執行
-	            // ...
-	        } else {
-	            // 如果使用者選擇了 "back"，則回到上一頁
-	            // ...
-	        }
+	        if (result.isPresent() && result.get() != continueBtn) {
+	            
+	        } 
 	    });
 
 	    stopBtn.setTranslateX(30);
@@ -83,7 +80,7 @@ public class Game {
 	    aboveText.setY(30);
 	    pane.getChildren().add(aboveText);
 	    
-	    Text score = new Text(Integer.toString(0));
+	    score = new Text(Integer.toString(0));
 	    score.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 30));
 	    score.setX(430);
 	    score.setY(80);
@@ -199,7 +196,6 @@ public class Game {
 					//System.out.print(i);
 					//System.out.print(" ");
 					//System.out.print(j);
-					
 					print(i,j,x,y,moving[i][j]);
 					System.out.println("");
 				}
@@ -207,7 +203,13 @@ public class Game {
 			
 		}
 		vis[x][y] = false;
-		
+		for(int i=1;i<=5;i++) {
+			for(int j=1;j<=5;j++) {
+				if(vis[i][j]) {
+					this.score.setText(Integer.toString(Integer.parseInt(this.score.getText())+Integer.parseInt(this.pad[i][j].getText())));
+				}
+			}
+		}
 		SequentialTransition sq = new SequentialTransition();
 		boolean flag = false;
 		do {
@@ -219,6 +221,7 @@ public class Game {
 					if(moving[i][j].size() != 0) {
 						if(moving[i][j].size() != 0)flag = true;
 						char dd = moving[i][j].pop();
+
 						t.getKeyFrames().add(move(this.pad[i][j], dd));
 					}
 				}
@@ -268,24 +271,25 @@ public class Game {
 			System.out.println("");
 		}
 		*/
+
+		SequentialTransition st = new SequentialTransition();
+
 		Timeline t = new Timeline();
 		t.setCycleCount(10);
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
-				//this.pad[i][j+b[i][j]] = this.pad[i][j];
 				for(int k=0;k<b[i][j];k++) {
-					t.getKeyFrames().add(move(this.pad[i][j], 'D'));
+					t.getKeyFrames().add(move(this.pad[i][j], 'D'));	
 				}
 			}
 		}
-		SequentialTransition st = new SequentialTransition();
+
 		st.getChildren().add(t);
+		
 		st.setOnFinished(e->{
 			process_block(b);
 		});
 		st.play();
-		//adding new blacks.
-		 
 		 
 	}
 	private void process_block(int[][] b) {
@@ -330,7 +334,6 @@ public class Game {
 			scan_pad();
 			disable_pad(false);
 		});
-		//showPad();
 		st.play();
 	}
 	private void scan_pad() {
