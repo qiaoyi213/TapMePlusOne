@@ -82,11 +82,15 @@ public class Game {
 	    aboveText.setX(130);
 	    aboveText.setY(30);
 	    pane.getChildren().add(aboveText);
-
-		
+	    
+	    Text score = new Text(Integer.toString(0));
+	    score.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 30));
+	    score.setX(430);
+	    score.setY(80);
+	    pane.getChildren().add(score);
+	
 		this.pad = new TButton[7][7];		
-		this.score = 0;
-		this.life = 5;
+		
 		for(int i=1;i<=5;i++) {
 			for(int j=0;j<=5;j++) {
 				this.pad[i][j] = null;
