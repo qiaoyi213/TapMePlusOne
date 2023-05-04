@@ -20,6 +20,7 @@ public class Game {
 	private int score;
 	private Pane pane;
 	private Scene mainScene;
+	private Direction[][] e;
 	public Game(){
 		this.pane = new Pane();
 		this.pad = new Button[7][7];		
@@ -58,54 +59,90 @@ public class Game {
 	private int getButtonNumber(Button btn) {
 		return Integer.parseInt(btn.getText());
 	}
-
 	private void bfs(int x, int y) {
 		Queue<Pair<Integer,Integer>> q = new LinkedList<>();
 		q.add(new Pair<Integer, Integer>(x,y));
 		int target = getButtonNumber(this.pad[x][y]);
 		System.out.println(target);
 		boolean[][] vis = new boolean[7][7];
-		
+		e = new Direction[7][7];
 		while(q.size() > 0) {
 			Pair<Integer, Integer> now = q.poll();
 			int nowX = now.getKey();
 			int nowY = now.getValue();
+			/*
 			System.out.print(nowX);
 			System.out.print(" ");
 			System.out.println(nowY);
+			System.out.println("___");
+			*/
 			if(nowX+1 <= 5 && nowX+1 >= 1 && nowY >= 1 && nowY <= 5 && vis[nowX+1][nowY] == false && getButtonNumber(this.pad[nowX+1][nowY]) == target) {
 				vis[nowX+1][nowY] = true;
 				q.add(new Pair<Integer, Integer>(nowX+1, nowY));
+				e[nowX+1][nowY] = new Direction(nowX, nowY, 'L');
+				
+				/*
+				System.out.print(nowX+1);
+				System.out.print(" ");
+				System.out.println(nowY);
+				*/
 			}
 			if(nowX-1 <= 5 && nowX-1 >= 1 && nowY >= 1 && nowY <= 5 && vis[nowX-1][nowY] == false && getButtonNumber(this.pad[nowX-1][nowY]) == target) {
 				vis[nowX-1][nowY] = true;
 				q.add(new Pair<Integer, Integer>(nowX-1, nowY));
+				e[nowX-1][nowY] = new Direction(nowX, nowY, 'R');
+				
+				/*
+				System.out.print(nowX-1);
+				System.out.print(" ");
+				System.out.println(nowY);
+				*/
 			}
 			if(nowX <= 5 && nowX >= 1 && nowY+1 >= 1 && nowY+1 <= 5 && vis[nowX][nowY+1] == false && getButtonNumber(this.pad[nowX][nowY+1]) == target) {
 				vis[nowX][nowY+1] = true;
 				q.add(new Pair<Integer, Integer>(nowX, nowY+1));
+				e[nowX][nowY+1] = new Direction(nowX, nowY, 'U');
+				/*
+				System.out.print(nowX);
+				System.out.print(" ");
+				System.out.println(nowY+1);
+				*/
 			}
 			if(nowX <= 5 && nowX >= 1 && nowY-1 >= 1 && nowY-1 <= 5 && vis[nowX][nowY-1] == false && getButtonNumber(this.pad[nowX][nowY-1]) == target) {
 				vis[nowX][nowY-1] = true;
 				q.add(new Pair<Integer, Integer>(nowX, nowY-1));
+				e[nowX][nowY-1] = new Direction(nowX, nowY, 'D');
+
+				/*
+				System.out.print(nowX);
+				System.out.print(" ");
+				System.out.println(nowY-1);
+				*/
 			}
 		}
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
 				if(vis[j][i]) {
-					System.out.print("1 ");
-				} else {
-					System.out.print("0 ");
+					System.out.print(j);
+					System.out.print(" ");
+					System.out.print(i);
+					print(j,i,x,y);
+					System.out.println("");
 				}
 			}
-			System.out.println("");
 		}
-		 
+		
 	}
-	
+	private void print(int a,int b, int tx, int ty) {
+		if(a == tx && b == ty)return;
+		if(e[a][b] == null)return;
+		print(e[a][b].x,e[a][b].y,tx,ty);
+		System.out.print(e[a][b].dir);
+	}
 	public void padding() {
 		
 	}
+	
 	public void showPad() {
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
