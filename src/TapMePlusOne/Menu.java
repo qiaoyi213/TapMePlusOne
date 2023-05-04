@@ -27,6 +27,7 @@ public class Menu {
 	    guideText.setY(50);
 	    helpPane.getChildren().add(guideText);
 	    
+	    
 	    ImageView imageView = new ImageView(new Image("file:resources/guide.jpeg"));
 	    imageView.setLayoutX(150);
 	    imageView.setLayoutY(100);

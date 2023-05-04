@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Optional;
 
 import javafx.util.Duration;
 import javafx.util.Pair;
@@ -15,7 +16,16 @@ import javafx.scene.Scene;
 import javafx.animation.*;
 import javafx.animation.PathTransition.OrientationType;
 import javafx.scene.shape.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 public class Game {
 	
 	private Button[][] pad;
@@ -27,6 +37,52 @@ public class Game {
 	Stack<Character>[][] moving;
 	public Game(){
 		this.pane = new Pane();
+		
+		// 新增 stopBtn
+		Button stopBtn = new Button();
+		Image stopImage = new Image("file:resources/stop.png");
+		ImageView stopImageView = new ImageView(stopImage);
+		stopImageView.setFitHeight(50);
+		stopImageView.setFitWidth(50);
+		stopBtn.setGraphic(stopImageView);
+	    stopBtn.setOnAction(event -> {
+	        // 創建 Alert 視窗
+	        Alert alert = new Alert(AlertType.CONFIRMATION);
+	        alert.setTitle("Stop");
+	        alert.setHeaderText(null);
+	        alert.setContentText("Do you want to continue or go back?");
+
+	        // 新增兩個 ButtonType，分別對應 "continue" 與 "back"
+	        ButtonType continueBtn = new ButtonType("continue");
+	        ButtonType backBtn = new ButtonType("back");
+
+	        // 將 ButtonType 加入 Alert 中
+	        alert.getButtonTypes().setAll(continueBtn, backBtn);
+
+	        // 顯示 Alert 視窗，並等待使用者選擇
+	        Optional<ButtonType> result = alert.showAndWait();
+
+	        // 根據使用者選擇的 ButtonType 來做不同的處理
+	        if (result.isPresent() && result.get() == continueBtn) {
+	            // 如果使用者選擇了 "continue"，則繼續執行
+	            // ...
+	        } else {
+	            // 如果使用者選擇了 "back"，則回到上一頁
+	            // ...
+	        }
+	    });
+
+	    stopBtn.setTranslateX(30);
+	    stopBtn.setTranslateY(30);
+	    pane.getChildren().add(stopBtn);
+	    
+	    Text aboveText = new Text("TARGET         SCORE");
+	    aboveText.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 30));
+	    aboveText.setX(130);
+	    aboveText.setY(30);
+	    pane.getChildren().add(aboveText);
+
+		
 		this.pad = new Button[7][7];		
 		this.score = 0;
 		for(int i=1;i<=5;i++) {
