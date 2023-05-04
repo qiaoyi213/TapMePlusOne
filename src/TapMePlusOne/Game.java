@@ -37,7 +37,7 @@ public class Game {
 	Stack<Character>[][] moving;
 	public Game(){
 		this.pane = new Pane();
-		
+		vis = new boolean[7][7];
 		// 新增 stopBtn
 		Button stopBtn = new Button();
 		Image stopImage = new Image("file:resources/stop.png");
@@ -93,7 +93,6 @@ public class Game {
 		
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
-				
 				this.pad[i][j] = new Button(Integer.toString((int)(Math.random()*6)+1));
 				final Button nowBtn = this.pad[i][j];
 				final int x = i;
@@ -104,10 +103,9 @@ public class Game {
 				nowBtn.setOnAction(event-> {
 					nowBtn.setText(Integer.toString(Integer.parseInt(nowBtn.getText())+1));
 					bfs(x,y);
-					
 				});
-				nowBtn.setTranslateX(30+110*(i-1));
-				nowBtn.setTranslateY(270+(j-1)*110);
+				nowBtn.setTranslateX(30+110*(j-1));
+				nowBtn.setTranslateY(270+(i-1)*110);
 			}
 		}
 		for(int i=1;i<=5;i++) {
@@ -122,34 +120,41 @@ public class Game {
 	}
 	private void bfs(int x, int y) {
 		Queue<Pair<Integer,Integer>> q = new LinkedList<>();
+		
 		q.add(new Pair<Integer, Integer>(x,y));
 		int target = getButtonNumber(this.pad[x][y]);
 		System.out.println(target);
-		boolean[][] vis = new boolean[7][7];
+		showPad();
+		vis = new boolean[7][7];
 		e = new Direction[7][7];
 		while(q.size() > 0) {
 			Pair<Integer, Integer> now = q.poll();
 			int nowX = now.getKey();
 			int nowY = now.getValue();
+			/*
+			System.out.print(nowX);
+			System.out.print(" ");
+			System.out.println(nowY);
+			*/
 			if(nowX+1 <= 5 && nowX+1 >= 1 && nowY >= 1 && nowY <= 5 && vis[nowX+1][nowY] == false && getButtonNumber(this.pad[nowX+1][nowY]) == target) {
 				vis[nowX+1][nowY] = true;
 				q.add(new Pair<Integer, Integer>(nowX+1, nowY));
-				e[nowX+1][nowY] = new Direction(nowX, nowY, 'L');
+				e[nowX+1][nowY] = new Direction(nowX, nowY, 'U');
 			}
 			if(nowX-1 <= 5 && nowX-1 >= 1 && nowY >= 1 && nowY <= 5 && vis[nowX-1][nowY] == false && getButtonNumber(this.pad[nowX-1][nowY]) == target) {
 				vis[nowX-1][nowY] = true;
 				q.add(new Pair<Integer, Integer>(nowX-1, nowY));
-				e[nowX-1][nowY] = new Direction(nowX, nowY, 'R');
+				e[nowX-1][nowY] = new Direction(nowX, nowY, 'D');
 			}
 			if(nowX <= 5 && nowX >= 1 && nowY+1 >= 1 && nowY+1 <= 5 && vis[nowX][nowY+1] == false && getButtonNumber(this.pad[nowX][nowY+1]) == target) {
 				vis[nowX][nowY+1] = true;
 				q.add(new Pair<Integer, Integer>(nowX, nowY+1));
-				e[nowX][nowY+1] = new Direction(nowX, nowY, 'U');
+				e[nowX][nowY+1] = new Direction(nowX, nowY, 'L');
 			}
 			if(nowX <= 5 && nowX >= 1 && nowY-1 >= 1 && nowY-1 <= 5 && vis[nowX][nowY-1] == false && getButtonNumber(this.pad[nowX][nowY-1]) == target) {
 				vis[nowX][nowY-1] = true;
 				q.add(new Pair<Integer, Integer>(nowX, nowY-1));
-				e[nowX][nowY-1] = new Direction(nowX, nowY, 'D');
+				e[nowX][nowY-1] = new Direction(nowX, nowY, 'R');
 			}
 		}
 		moving = new Stack[7][7];
@@ -158,54 +163,160 @@ public class Game {
 				moving[i][j] = new Stack<Character>();
 			}
 		}
-		
+		int counter = 0;
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
-				if(vis[j][i]) {
-					System.out.print(j);
-					System.out.print(" ");
-					System.out.print(i);
-					
-					print(j,i,x,y,moving[j][i]);
-					System.out.println("");
+				if(vis[i][j] == true) {
+					counter++;
 				}
 			}
 		}
+		if(counter < 3)return;
+		
+		for(int i=1;i<=5;i++) {
+			for(int j=1;j<=5;j++) {
+				if(vis[i][j]) {
+					//System.out.print(i);
+					//System.out.print(" ");
+					//System.out.print(j);
+					
+					print(i,j,x,y,moving[i][j]);
+					System.out.println("");
+				}
+			}
+			
+		}
+		vis[x][y] = false;
+		
 		SequentialTransition sq = new SequentialTransition();
 		boolean flag = false;
 		do {
-			
 			flag = false;
 			Timeline t = new Timeline();
 			t.setCycleCount(10);
 			for(int i=1;i<=5;i++) {
 				for(int j=1;j<=5;j++) {
-					if(moving[j][i].size() != 0) {
-						if(moving[j][i].size() != 0)flag = true;
-						char dd = moving[j][i].pop();
-						t.getKeyFrames().add(move(this.pad[j][i], dd));
+					if(moving[i][j].size() != 0) {
+						if(moving[i][j].size() != 0)flag = true;
+						char dd = moving[i][j].pop();
+						t.getKeyFrames().add(move(this.pad[i][j], dd));
 					}
 				}
 			}
 			sq.getChildren().add(t);
 		}while(flag);
+		sq.setOnFinished(e -> {
+			padding();
+		});
 		sq.play();
-
 		
+	
 	}
 	private void print(int a,int b, int tx, int ty, Stack<Character> st) {
 		if(a == tx && b == ty)return;
 		if(e[a][b] == null)return;
 		print(e[a][b].x,e[a][b].y,tx,ty,st);
-		
 		st.add(e[a][b].dir);
+		//System.out.print(e[a][b].dir);
 	}
+	
 	public void padding() {
+		//remove 
+		
+		//fill the blanks.
+		int[][] b = new int[7][7];
+		
+
+		for(int i=1;i<=5;i++) {
+			for(int j=1;j<=5;j++) {
+				int bubble = 0;
+				if(vis[i][j] == true) continue;
+				for(int k=i;k<=5;k++) {
+					if(vis[k][j] == true) {
+						bubble++;
+					}
+				}
+				b[i][j] = bubble;
+			}
+		}
+		/*
+		for(int i=1;i<=5;i++) {
+			for(int j=1;j<=5;j++) {
+				System.out.print(b[j][i]);
+				
+			}
+			System.out.println("");
+		}
+		*/
+		Timeline t = new Timeline();
+		t.setCycleCount(10);
+		for(int i=1;i<=5;i++) {
+			for(int j=1;j<=5;j++) {
+				//this.pad[i][j+b[i][j]] = this.pad[i][j];
+				for(int k=0;k<b[i][j];k++) {
+					t.getKeyFrames().add(move(this.pad[i][j], 'D'));
+				}
+			}
+		}
+		SequentialTransition st = new SequentialTransition();
+		st.getChildren().add(t);
+		st.setOnFinished(e->{
+			process_block(b);
+		});
+		st.play();
+		//adding new blacks.
+		 
+		 
+	}
+	private void process_block(int[][] b) {
+		
+
+		for(int i=1;i<=5;i++) {
+			for(int j=1;j<=5;j++) {
+				if(vis[i][j]) {
+					this.pad[i][j].setText("0");
+					this.pad[i][j].setVisible(false);
+				}
+			}
+		}
+		
+		for(int i=5;i>=1;i--) {
+			for(int j=1;j<=5;j++) {
+				Button tmp = this.pad[i+b[i][j]][j];
+				this.pad[i+b[i][j]][j] = this.pad[i][j];
+				this.pad[i][j] = tmp;
+			}	
+		}
+		//showPad();
+		SequentialTransition st = new SequentialTransition();
+		for(int i=5;i>=1;i--) {
+			for(int j=1;j<=5;j++) {
+				if(getButtonNumber(this.pad[i][j]) == 0) {
+					this.pad[i][j].setText("1");
+					add_new_block(i,j);
+					Timeline t = new Timeline();
+					t.setCycleCount(10);
+					for(int k=i;k>0;k--) {						
+						t.getKeyFrames().add(move(this.pad[k][j],'D'));
+					}
+					st.getChildren().add(t);
+				}
+			}
+		}
+		//showPad();
+		st.play();
+	}
+	private void add_new_block(int x,int y) {
+		//this.pad[x][y].setText(Integer.toString((int)(Math.random()*6)+1));
+		this.pad[x][y].setTranslateY(160);
+		this.pad[x][y].setTranslateX(30+110*(y-1));
+		this.pad[x][y].setVisible(true);
+		
 		
 	}
 	private KeyFrame move(Button btn, char dir) {
 		
-		KeyFrame kf = new KeyFrame(Duration.millis(20), event -> {
+		KeyFrame kf = new KeyFrame(Duration.millis(30), event -> {
 			if(dir == 'U') {
 				btn.setTranslateY(btn.getTranslateY() - 11);
 			} else if(dir == 'D') {
@@ -225,6 +336,7 @@ public class Game {
 			}
 			System.out.println("");
 		}
+		System.out.println("");
 	}
 	public Scene getScene() {
 		return this.mainScene;

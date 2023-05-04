@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 public class TapMePlusOne extends Application{
 	@Override
 	public void start(Stage primaryStage) {
-		Menu menu = new Menu();
+		//Menu menu = new Menu();
 		Game game = new Game();
 		primaryStage.setScene(game.getScene());
 		primaryStage.setTitle("Tap Me +1");
