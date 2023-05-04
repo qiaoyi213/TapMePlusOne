@@ -31,7 +31,6 @@ public class Game {
 	
 	private TButton[][] pad;
 	private boolean[][] vis;
-	private int score;
 	private Pane pane;
 	private Scene mainScene;
 	private Direction[][] e;
@@ -39,6 +38,7 @@ public class Game {
 	public Game(){
 		this.pane = new Pane();
 		vis = new boolean[7][7];
+		
 		// 新增 stopBtn
 		Button stopBtn = new Button();
 		Image stopImage = new Image("file:resources/stop.png");
@@ -86,6 +86,7 @@ public class Game {
 		
 		this.pad = new TButton[7][7];		
 		this.score = 0;
+		this.life = 5;
 		for(int i=1;i<=5;i++) {
 			for(int j=0;j<=5;j++) {
 				this.pad[i][j] = null;
@@ -101,7 +102,7 @@ public class Game {
 				final int y = j;
 				nowBtn.setPrefSize(100, 100);
 				
-				nowBtn.setStyle("-fx-background-color: #6666ff; -fx-border-radius: 50;");
+				nowBtn.setStyle("-fx-background-color: #6666ff; -fx-border-radius: 50; -fx-font-size:40");
 				nowBtn.setTextFill(Color.WHITE);
 				nowBtn.setPos(x,y);
 				nowBtn.setOnAction(event-> {
@@ -329,21 +330,7 @@ public class Game {
 		st.play();
 	}
 	private void scan_pad() {
-		SequentialTransition st = new SequentialTransition();
-		st.setDelay(Duration.millis(1000));
-		for(int i=1;i<=5;i++) {
-			for(int j=1;j<=5;j++) {
-				final int x = i, y = j;
-				
-				Timeline t = new Timeline();
-				t.getKeyFrames().add(new KeyFrame(Duration.millis(100), e -> {
-					disable_pad(true);
-					bfs(x,y);
-				}));
-				st.getChildren().add(t);
-			}
-		}
-		st.play();
+
 	}
 	private void add_new_block(int x,int y) {
 		//this.pad[x][y].setText(Integer.toString((int)(Math.random()*6)+1));
@@ -362,7 +349,7 @@ public class Game {
 		if(btn == null) {
 			System.out.println("!!!NULL BTN");
 		}
-		KeyFrame kf = new KeyFrame(Duration.millis(30), event -> {
+		KeyFrame kf = new KeyFrame(Duration.millis(20), event -> {
 			if(dir == 'U') {
 				btn.setTranslateY(btn.getTranslateY() - 11);
 			} else if(dir == 'D') {
