@@ -210,7 +210,7 @@ public class Game {
 				}
 			} else {
 				if(this.life != 5) {
-					this.life++;
+					increaseLife();
 				}
 			}
 			System.out.print("LIFE: ");
@@ -432,6 +432,11 @@ public class Game {
         this.life--;
         this.lifeBar.setWidth(100 * this.life);
     }
+	private void increaseLife() {
+	    this.life++;
+	    this.lifeBar.setWidth(100 * this.life);
+	}
+
 	public Scene getScene() {
 		return this.mainScene;
 	}
