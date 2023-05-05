@@ -33,13 +33,16 @@ public class Game {
 	private boolean[][] vis;
 	private Pane pane;
 	Text score;
+	int life;
+	private boolean playing;
 	private Scene mainScene;
 	private Direction[][] e;
 	Stack<Character>[][] moving;
 	public Game(){
 		this.pane = new Pane();
 		vis = new boolean[7][7];
-		
+		this.playing = false;
+		life = 5;
 		// 新增 stopBtn
 		Button stopBtn = new Button();
 		Image stopImage = new Image("file:resources/stop.png");
@@ -109,8 +112,13 @@ public class Game {
 				nowBtn.setOnAction(event-> {
 					nowBtn.setText(Integer.toString(Integer.parseInt(nowBtn.getText())+1));
 					disable_pad(true);
-				
-					bfs(nowBtn.getI(),nowBtn.getJ());
+					while(true) {
+						if(playing == false) {
+							bfs(nowBtn.getI(),nowBtn.getJ(), false);
+							break;
+						}
+					}
+
 					
 					
 				});
@@ -128,7 +136,8 @@ public class Game {
 	private int getButtonNumber(Button btn) {
 		return Integer.parseInt(btn.getText());
 	}
-	private void bfs(int x, int y) {
+	private void bfs(int x, int y, boolean isScan) {
+		playing = true;
 		disable_pad(true);
 		Queue<Pair<Integer,Integer>> q = new LinkedList<>();
 		
@@ -187,6 +196,20 @@ public class Game {
 		}
 		if(counter < 3) {
 			disable_pad(false);
+			playing = false;
+			if(!isScan) {
+				this.life--;
+				if(this.life <= 0) {
+					System.out.println("GAME OVER");
+					
+				}
+			} else {
+				if(this.life != 5) {
+					this.life++;
+				}
+			}
+			System.out.print("LIFE: ");
+			System.out.println(this.life);
 			return;
 		}
 		
@@ -232,8 +255,6 @@ public class Game {
 			padding();
 		});
 		sq.play();
-		
-	
 	}
 	private void print(int a,int b, int tx, int ty, Stack<Character> st) {
 		if(a == tx && b == ty)return;
@@ -244,12 +265,8 @@ public class Game {
 	}
 	
 	public void padding() {
-		//remove 
-		
-		//fill the blanks.
 		int[][] b = new int[7][7];
-		
-
+	
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
 				int bubble = 0;
@@ -262,16 +279,6 @@ public class Game {
 				b[i][j] = bubble;
 			}
 		}
-		/*
-		for(int i=1;i<=5;i++) {
-			for(int j=1;j<=5;j++) {
-				System.out.print(b[j][i]);
-				
-			}
-			System.out.println("");
-		}
-		*/
-
 		SequentialTransition st = new SequentialTransition();
 
 		Timeline t = new Timeline();
@@ -293,8 +300,6 @@ public class Game {
 		 
 	}
 	private void process_block(int[][] b) {
-		
-
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
 				if(vis[i][j]) {
@@ -331,13 +336,53 @@ public class Game {
 			}
 		}
 		st.setOnFinished(e -> {
-			scan_pad();
+			playing=false;
 			disable_pad(false);
+			Scanner s = new Scanner(System.in);
+			System.out.println("SCAN");
+
+			//dev(x,y);
+			scan_pad();
+			
 		});
 		st.play();
 	}
+	private void dev(int i, int j) {
+		boolean flag = true;
+		while(flag) {
+			if(playing == false) {
+				bfs(i,j,true);
+				flag = false;
+			}
+		}
+	}
+	
 	private void scan_pad() {
-
+	
+		Thread thread = new Thread(() -> {
+			for(int i=5;i>=1;i--) {
+				for(int j=1;j<=5;j++) {
+					boolean flag = true;
+					System.out.print("scan the point: ");
+					System.out.print(i);
+					System.out.print(" ");
+					System.out.println(j);
+					System.out.println(playing);
+					while(flag) {
+						if(playing == false) {
+							System.out.println("RUNBFS");
+							bfs(i,j,true);
+							flag = false;
+						}
+					}
+				}
+			}
+		});
+				
+		thread.start();
+				
+			
+		
 	}
 	private void add_new_block(int x,int y) {
 		//this.pad[x][y].setText(Integer.toString((int)(Math.random()*6)+1));
