@@ -34,6 +34,7 @@ public class Game {
 	private Pane pane;
 	Text score;
 	int life;
+	private Rectangle lifeBar;
 	private boolean playing;
 	private Scene mainScene;
 	private Direction[][] e;
@@ -43,6 +44,10 @@ public class Game {
 		vis = new boolean[7][7];
 		this.playing = false;
 		life = 5;
+		this.lifeBar = new Rectangle(100* this.life , 20, Color.RED);
+		this.lifeBar.setTranslateX(50);
+        this.lifeBar.setTranslateY(150);
+        pane.getChildren().add(lifeBar);
 		// 新增 stopBtn
 		Button stopBtn = new Button();
 		Image stopImage = new Image("file:resources/stop.png");
@@ -198,7 +203,7 @@ public class Game {
 			disable_pad(false);
 			playing = false;
 			if(!isScan) {
-				this.life--;
+				decreaseLife();
 				if(this.life <= 0) {
 					System.out.println("GAME OVER");
 					
@@ -423,6 +428,10 @@ public class Game {
 		}
 		System.out.println("");
 	}
+	private void decreaseLife() {
+        this.life--;
+        this.lifeBar.setWidth(100 * this.life);
+    }
 	public Scene getScene() {
 		return this.mainScene;
 	}
