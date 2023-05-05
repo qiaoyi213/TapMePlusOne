@@ -251,6 +251,7 @@ public class Game {
 		}while(flag);
 		sq.setOnFinished(e -> {
 			increaseLife();
+			this.pad[x][y].setText(Integer.toString(Integer.parseInt(this.pad[x][y].getText())+1));
 			padding();
 		});
 		sq.play();
