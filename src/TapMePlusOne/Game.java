@@ -125,7 +125,6 @@ public class Game {
 					}
 
 					
-					
 				});
 				nowBtn.setTranslateX(30+110*(j-1));
 				nowBtn.setTranslateY(270+(i-1)*110);
@@ -206,11 +205,6 @@ public class Game {
 				decreaseLife();
 				if(this.life <= 0) {
 					System.out.println("GAME OVER");
-					
-				}
-			} else {
-				if(this.life != 5) {
-					this.life++;
 				}
 			}
 			System.out.print("LIFE: ");
@@ -249,7 +243,6 @@ public class Game {
 					if(moving[i][j].size() != 0) {
 						if(moving[i][j].size() != 0)flag = true;
 						char dd = moving[i][j].pop();
-
 						t.getKeyFrames().add(move(this.pad[i][j], dd));
 					}
 				}
@@ -257,6 +250,7 @@ public class Game {
 			sq.getChildren().add(t);
 		}while(flag);
 		sq.setOnFinished(e -> {
+			increaseLife();
 			padding();
 		});
 		sq.play();
@@ -385,9 +379,7 @@ public class Game {
 		});
 				
 		thread.start();
-				
-			
-		
+
 	}
 	private void add_new_block(int x,int y) {
 		//this.pad[x][y].setText(Integer.toString((int)(Math.random()*6)+1));
@@ -432,6 +424,12 @@ public class Game {
         this.life--;
         this.lifeBar.setWidth(100 * this.life);
     }
+	private void increaseLife() {
+		if(this.life != 5) {
+			this.life++;
+			this.lifeBar.setWidth(100*this.life);
+		}
+	}
 	public Scene getScene() {
 		return this.mainScene;
 	}
