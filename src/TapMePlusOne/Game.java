@@ -74,7 +74,7 @@ public class Game {
 
 	        // 根據使用者選擇的 ButtonType 來做不同的處理
 	        if (result.isPresent() && result.get() != continueBtn) {
-	            
+	            exit();
 	        } 
 	    });
 
@@ -123,8 +123,6 @@ public class Game {
 							break;
 						}
 					}
-
-					
 				});
 				nowBtn.setTranslateX(30+110*(j-1));
 				nowBtn.setTranslateY(270+(i-1)*110);
@@ -430,6 +428,9 @@ public class Game {
 			this.life++;
 			this.lifeBar.setWidth(100*this.life);
 		}
+	}
+	private void exit() {
+		System.out.println("Exit");
 	}
 	public Scene getScene() {
 		return this.mainScene;
