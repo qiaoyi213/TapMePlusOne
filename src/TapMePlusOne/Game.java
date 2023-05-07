@@ -44,7 +44,7 @@ public class Game {
 		vis = new boolean[7][7];
 		this.playing = false;
 		life = 5;
-		this.lifeBar = new Rectangle(100* this.life , 20, Color.RED);
+		this.lifeBar = new Rectangle(100* this.life , 20, Color.LIGHTCORAL);
 		this.lifeBar.setTranslateX(50);
         this.lifeBar.setTranslateY(150);
         pane.getChildren().add(lifeBar);
