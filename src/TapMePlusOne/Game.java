@@ -7,10 +7,12 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Optional;
-
 import javafx.util.Duration;
 import javafx.util.Pair;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -106,17 +108,18 @@ public class Game {
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
 				this.pad[i][j] = new TButton();
-				this.pad[i][j].setText((Integer.toString((int)(Math.random()*6)+1)));
+				this.pad[i][j].setVal((int)(Math.random()*6)+1);
 				final TButton nowBtn = this.pad[i][j];
 				final int x = i;
 				final int y = j;
 				nowBtn.setPrefSize(100, 100);
 				
-				nowBtn.setStyle("-fx-background-color: #6666ff; -fx-border-radius: 50; -fx-font-size:40");
+				nowBtn.setStyle("-fx-border-radius: 50; -fx-font-size:40");
+				
 				nowBtn.setTextFill(Color.WHITE);
 				nowBtn.setPos(x,y);
 				nowBtn.setOnAction(event-> {
-					nowBtn.setText(Integer.toString(Integer.parseInt(nowBtn.getText())+1));
+					nowBtn.setVal(Integer.parseInt(nowBtn.getText())+1);
 					disable_pad(true);
 					while(true) {
 						if(playing == false) {
@@ -250,7 +253,7 @@ public class Game {
 		}while(flag);
 		sq.setOnFinished(e -> {
 			increaseLife();
-			this.pad[x][y].setText(Integer.toString(Integer.parseInt(this.pad[x][y].getText())+1));
+			this.pad[x][y].setVal(Integer.parseInt(this.pad[x][y].getText())+1);
 			padding();
 		});
 		sq.play();
@@ -322,7 +325,8 @@ public class Game {
 		for(int i=5;i>=1;i--) {
 			for(int j=1;j<=5;j++) {
 				if(getButtonNumber(this.pad[i][j]) == 0) {
-					this.pad[i][j].setText(Integer.toString((int)(Math.random()*6+1)));
+					this.pad[i][j].setVal((int)(Math.random()*6+1));
+					
 					add_new_block(i,j);
 					for(int k=0;k<i;k++) {						
 						Timeline t = new Timeline();
@@ -382,7 +386,7 @@ public class Game {
 
 	}
 	private void add_new_block(int x,int y) {
-		//this.pad[x][y].setText(Integer.toString((int)(Math.random()*6)+1));
+		this.pad[x][y].setVal((int)(Math.random()*6)+1);
 		this.pad[x][y].setTranslateY(160);
 		this.pad[x][y].setTranslateX(30+110*(y-1));
 		this.pad[x][y].setVisible(true);
@@ -391,6 +395,7 @@ public class Game {
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
 				this.pad[i][j].setDisable(flag);
+				this.pad[i][j].setOpacity(1);
 			}
 		}
 	}
