@@ -108,7 +108,6 @@ public class Game {
 				final int y = j;
 				nowBtn.setPrefSize(100, 100);
 				nowBtn.setStyle("-fx-border-radius: 50; -fx-font-size:40");
-				nowBtn.setTextFill(Color.WHITE);
 				nowBtn.setPos(x,y);
 				nowBtn.setOnAction(event-> {
 					nowBtn.setVal(Integer.parseInt(nowBtn.getText())+1);
