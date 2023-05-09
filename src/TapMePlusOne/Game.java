@@ -90,32 +90,24 @@ public class Game {
 	    aboveText.setX(130);
 	    aboveText.setY(30);
 	    pane.getChildren().add(aboveText);
-	    
-	    score = new Text(Integer.toString(0));
-	    score.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 30));
-	    score.setX(430);
-	    score.setY(80);
-	    pane.getChildren().add(score);
 	
+	    
 		this.pad = new TButton[7][7];		
 		
 		for(int i=1;i<=5;i++) {
 			for(int j=0;j<=5;j++) {
-				this.pad[i][j] = null;
+				this.pad[i][j] = new TButton();
 			}
 		}
+		shufflePad();
 		
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
-				this.pad[i][j] = new TButton();
-				this.pad[i][j].setVal((int)(Math.random()*6)+1);
 				final TButton nowBtn = this.pad[i][j];
 				final int x = i;
 				final int y = j;
 				nowBtn.setPrefSize(100, 100);
-				
 				nowBtn.setStyle("-fx-border-radius: 50; -fx-font-size:40");
-				
 				nowBtn.setTextFill(Color.WHITE);
 				nowBtn.setPos(x,y);
 				nowBtn.setOnAction(event-> {
@@ -132,9 +124,16 @@ public class Game {
 				nowBtn.setTranslateY(270+(i-1)*110);
 			}
 		}
+	    score = new Text(Integer.toString(0));
+	    score.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 30));
+	    score.setX(430);
+	    score.setY(80);
+	    pane.getChildren().add(score);
+	    
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
 				this.pane.getChildren().add(this.pad[i][j]);
+				
 			}
 		}
 		this.mainScene = new Scene(this.pane,600, 1024);
@@ -142,6 +141,7 @@ public class Game {
 	private int getButtonNumber(Button btn) {
 		return Integer.parseInt(btn.getText());
 	}
+
 	private void bfs(int x, int y, boolean isScan) {
 		playing = true;
 		disable_pad(true);
@@ -386,7 +386,7 @@ public class Game {
 
 	}
 	private void add_new_block(int x,int y) {
-		this.pad[x][y].setVal((int)(Math.random()*6)+1);
+		this.pad[x][y].setVal((int)(Math.random()*5)+1);
 		this.pad[x][y].setTranslateY(160);
 		this.pad[x][y].setTranslateX(30+110*(y-1));
 		this.pad[x][y].setVisible(true);
@@ -433,6 +433,14 @@ public class Game {
 		if(this.life != 5) {
 			this.life++;
 			this.lifeBar.setWidth(100*this.life);
+		}
+	}
+	private void shufflePad() {
+		int[][] tmp = RandomMatrix.generate();
+		for(int i=1;i<=5;i++) {
+			for(int j=1;j<=5;j++) {
+				this.pad[i][j].setVal(tmp[i][j]);
+			}
 		}
 	}
 	private void exit() {
