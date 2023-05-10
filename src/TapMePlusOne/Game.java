@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import javafx.util.Duration;
 import javafx.util.Pair;
@@ -15,6 +16,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.animation.*;
 import javafx.animation.PathTransition.OrientationType;
@@ -51,7 +53,7 @@ public class Game {
 		this.lifeBar.setTranslateX(50);
         this.lifeBar.setTranslateY(150);
         pane.getChildren().add(lifeBar);
-		// 新增 stopBtn
+		
 		Button stopBtn = new Button();
 		Image stopImage = new Image("file:resources/stop.png");
 		ImageView stopImageView = new ImageView(stopImage);
@@ -59,23 +61,19 @@ public class Game {
 		stopImageView.setFitWidth(50);
 		stopBtn.setGraphic(stopImageView);
 	    stopBtn.setOnAction(event -> {
-	        // 創建 Alert 視窗
+	        
 	        Alert alert = new Alert(AlertType.CONFIRMATION);
 	        alert.setTitle("Stop");
 	        alert.setHeaderText(null);
 	        alert.setContentText("Do you want to continue or go back?");
 
-	        // 新增兩個 ButtonType，分別對應 "continue" 與 "back"
 	        ButtonType continueBtn = new ButtonType("continue");
 	        ButtonType backBtn = new ButtonType("back");
 
-	        // 將 ButtonType 加入 Alert 中
 	        alert.getButtonTypes().setAll(continueBtn, backBtn);
 
-	        // 顯示 Alert 視窗，並等待使用者選擇
 	        Optional<ButtonType> result = alert.showAndWait();
 
-	        // 根據使用者選擇的 ButtonType 來做不同的處理
 	        if (result.isPresent() && result.get() != continueBtn) {
 	            exit();
 	        } 
@@ -207,6 +205,7 @@ public class Game {
 				decreaseLife();
 				if(this.life <= 0) {
 					System.out.println("GAME OVER");
+					showGameOver();
 				}
 			}
 			System.out.print("LIFE: ");
@@ -441,6 +440,54 @@ public class Game {
 		Menu menu = new Menu();
 		stage.setScene(menu.getScene());
 	}
+	public void showGameOver() {
+	    // 創建 Game Over 文字
+	    Text gameOverText = new Text("GAME OVER");
+	    gameOverText.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 60));
+	    gameOverText.setFill(Color.RED);
+	    gameOverText.setStroke(Color.BLACK);
+	    gameOverText.setStrokeWidth(2);
+	    gameOverText.setX(120);
+	    gameOverText.setY(400);
+	    gameOverText.setId("gameOverText"); // 設定 ID 以便識別
+
+	    // 創建重新開始按鈕
+	    Button restartBtn = new Button("Restart");
+	    restartBtn.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 30));
+	    restartBtn.setLayoutX(220);
+	    restartBtn.setLayoutY(500);
+	    restartBtn.setOnAction(event -> {
+	        resetGame();
+	    });
+	    restartBtn.setId("restartBtn"); // 設定 ID 以便識別
+
+	    // 加入遊戲結束文字和重新開始按鈕到畫面
+	    pane.getChildren().addAll(gameOverText, restartBtn);
+	}
+
+	private void resetGame() {
+	    // 重新初始化遊戲相關資料
+	    for (int i = 1; i <= 5; i++) {
+	        for (int j = 1; j <= 5; j++) {
+	            this.pad[i][j].setVal((int) (Math.random() * 6) + 1);
+	        }
+	    }
+	    this.score.setText("0");
+	    this.life = 5;
+	    this.lifeBar.setWidth(100 * this.life);
+
+	    // 移除遊戲結束文字和重新開始按鈕
+	    Node gameOverText = pane.lookup("#gameOverText");
+	    Node restartBtn = pane.lookup("#restartBtn");
+	    pane.getChildren().removeAll(gameOverText, restartBtn);
+
+	    // 啟用按鈕
+	    disable_pad(false);
+	    playing = false;
+	}
+
+
+
 	public Scene getScene() {
 		return this.mainScene;
 	}
