@@ -39,7 +39,7 @@ public class Game {
 	private Pane pane;
 	Text score;
 	int life;
-	private Rectangle lifeBar;
+	private ArrayList<Rectangle> lifeBar;
 	private boolean playing;
 	private Scene mainScene;
 	private Direction[][] e;
@@ -49,10 +49,14 @@ public class Game {
 		vis = new boolean[7][7];
 		this.playing = false;
 		life = 5;
-		this.lifeBar = new Rectangle(100* this.life , 20, Color.LIGHTCORAL);
-		this.lifeBar.setTranslateX(50);
-        this.lifeBar.setTranslateY(150);
-        pane.getChildren().add(lifeBar);
+		this.lifeBar = new ArrayList<Rectangle>(5);
+		for(int i=0;i<5;i++) {
+			this.lifeBar.add(new Rectangle(90, 20, Color.LIGHTCORAL));
+			this.lifeBar.get(i).setTranslateX(50 + 100*i);
+			this.lifeBar.get(i).setTranslateY(200);
+			pane.getChildren().add(this.lifeBar.get(i));
+		}
+        
 		
 		Button stopBtn = new Button();
 		Image stopImage = new Image("file:resources/stop.png");
@@ -425,12 +429,13 @@ public class Game {
 	}
 	private void decreaseLife() {
         this.life--;
-        this.lifeBar.setWidth(100 * this.life);
+        this.lifeBar.get(this.life).setVisible(false);
     }
 	private void increaseLife() {
 		if(this.life != 5) {
 			this.life++;
-			this.lifeBar.setWidth(100*this.life);
+			
+			this.lifeBar.get(this.life-1).setVisible(true);
 		}
 	}
 	private void shufflePad() {
@@ -483,7 +488,9 @@ public class Game {
 	    }
 	    this.score.setText("0");
 	    this.life = 5;
-	    this.lifeBar.setWidth(100 * this.life);
+	    for(int i=0;i<5;i++) {
+	    	this.lifeBar.get(i).setVisible(true);
+	    }
 
 	    // 移除遊戲結束文字和重新開始按鈕	
 	    Node gameOverText = pane.lookup("#gameOverText");
