@@ -16,6 +16,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.animation.*;
@@ -44,6 +45,10 @@ public class Game {
 	private Scene mainScene;
 	private Direction[][] e;
 	Stack<Character>[][] moving;
+    private MediaPlayer mediaPlayer;
+    private MediaView mediaView;
+    private Button closeButton;
+    
 	public Game(){
 		this.pane = new Pane();
 		vis = new boolean[7][7];
@@ -463,9 +468,9 @@ public class Game {
 	    restartBtn.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 30));
 	    restartBtn.setLayoutX(220);
 	    restartBtn.setLayoutY(500);
-
 	    restartBtn.setId("restartBtn"); // 設定 ID 以便識別
 	    restartBtn.setOnAction(event -> {
+	    	playVideo("/TapMePlusOne/resources/ads.mp4");
 	        resetGame();
 	    });
 
@@ -473,7 +478,31 @@ public class Game {
 	    pane.getChildren().addAll(gameOverText, restartBtn);
 	    
 	}
+	private void playVideo(String videoPath) {
+		String fullPath = getClass().getResource(videoPath).toExternalForm();
+        Media media = new Media(fullPath);
+        mediaPlayer = new MediaPlayer(media);
+        mediaView = new MediaView(mediaPlayer);
+        pane.getChildren().add(mediaView);
+        mediaPlayer.play();
 
+        // 在影片播放 5 秒後顯示關閉按鈕
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
+            showCloseButton();
+        }));
+        timeline.play();
+    }
+	private void showCloseButton() {
+        closeButton = new Button("✕");
+        closeButton.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 20));
+        closeButton.setAlignment(Pos.TOP_RIGHT);
+        closeButton.setOnAction(event -> {
+            stopVideo();
+        });
+
+        pane.getChildren().add(closeButton);
+    }
+	
 	private void resetGame() {
 	    // 重新初始化遊戲相關資料
 	    for (int i = 1; i <= 5; i++) {
@@ -493,8 +522,17 @@ public class Game {
 	    // 啟用按鈕
 	    disable_pad(false);
 	    playing = false;
+	    stopVideo();
 	}
-
+	private void stopVideo() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            pane.getChildren().remove(mediaView);
+        }
+        if (closeButton != null) {
+            pane.getChildren().remove(closeButton);
+        }
+    }
 
 
 	public Scene getScene() {
