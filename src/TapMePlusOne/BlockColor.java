@@ -13,7 +13,7 @@ public class BlockColor {
 			"FAC0E8",
 			"A0B8FF",
 			"D4D4D4",
-			"FFEDC",
+			"FFEDCC",
 			"FFA49C",
 			"F4A8E2",
 			"9CB8F7",

@@ -456,17 +456,18 @@ public class Game {
 	    gameOverText.setStrokeWidth(2);
 	    gameOverText.setX(120);
 	    gameOverText.setY(400);
-	    //gameOverText.setId("gameOverText"); // 設定 ID 以便識別
+	    gameOverText.setId("gameOverText"); // 設定 ID 以便識別
 
 	    // 創建重新開始按鈕
 	    Button restartBtn = new Button("Restart");
 	    restartBtn.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 30));
 	    restartBtn.setLayoutX(220);
 	    restartBtn.setLayoutY(500);
+
+	    restartBtn.setId("restartBtn"); // 設定 ID 以便識別
 	    restartBtn.setOnAction(event -> {
 	        resetGame();
 	    });
-	    //restartBtn.setId("restartBtn"); // 設定 ID 以便識別
 
 	    // 加入遊戲結束文字和重新開始按鈕到畫面
 	    pane.getChildren().addAll(gameOverText, restartBtn);
@@ -484,7 +485,7 @@ public class Game {
 	    this.life = 5;
 	    this.lifeBar.setWidth(100 * this.life);
 
-	    // 移除遊戲結束文字和重新開始按鈕
+	    // 移除遊戲結束文字和重新開始按鈕	
 	    Node gameOverText = pane.lookup("#gameOverText");
 	    Node restartBtn = pane.lookup("#restartBtn");
 	    pane.getChildren().removeAll(gameOverText, restartBtn);
