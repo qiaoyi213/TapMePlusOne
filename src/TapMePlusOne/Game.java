@@ -48,6 +48,7 @@ public class Game {
     private MediaPlayer mediaPlayer;
     private MediaView mediaView;
     private Button closeButton;
+	private boolean closeButtonPressed;
     
 	public Game(){
 		this.pane = new Pane();
@@ -470,7 +471,8 @@ public class Game {
 	    restartBtn.setLayoutY(500);
 	    restartBtn.setId("restartBtn"); // 設定 ID 以便識別
 	    restartBtn.setOnAction(event -> {
-	    	playVideo("/TapMePlusOne/resources/ads.mp4");
+	    	String videoUrl = "https://imgur.com/hoqa6d6";
+	    	playVideo(videoUrl);
 	        resetGame();
 	    });
 
@@ -478,30 +480,39 @@ public class Game {
 	    pane.getChildren().addAll(gameOverText, restartBtn);
 	    
 	}
-	private void playVideo(String videoPath) {
-		String fullPath = getClass().getResource(videoPath).toExternalForm();
-        Media media = new Media(fullPath);
-        mediaPlayer = new MediaPlayer(media);
-        mediaView = new MediaView(mediaPlayer);
-        pane.getChildren().add(mediaView);
-        mediaPlayer.play();
+	private void playVideo(String videoUrl) {
+	    Media media = new Media(videoUrl);
+	    mediaPlayer = new MediaPlayer(media);
+	    mediaView = new MediaView(mediaPlayer);
+	    pane.getChildren().add(mediaView);
+	    mediaPlayer.play();
 
-        // 在影片播放 5 秒後顯示關閉按鈕
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
-            showCloseButton();
-        }));
-        timeline.play();
-    }
+	    mediaPlayer.setOnEndOfMedia(() -> {
+	        showCloseButton();
+	        mediaPlayer.setOnEndOfMedia(null); // Reset the event handler
+	    });
+
+	    mediaPlayer.setOnStopped(() -> {
+	        // Check if the video was stopped by the user (close button) rather than reaching the end
+	        if (mediaPlayer.getStatus() == MediaPlayer.Status.STOPPED && closeButtonPressed) {
+	            resetGame();
+	        }
+	    });
+
+	    showCloseButton();
+	}
+	
 	private void showCloseButton() {
-        closeButton = new Button("✕");
-        closeButton.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 20));
-        closeButton.setAlignment(Pos.TOP_RIGHT);
-        closeButton.setOnAction(event -> {
-            stopVideo();
-        });
+	    closeButton = new Button("✕");
+	    closeButton.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 20));
+	    closeButton.setAlignment(Pos.TOP_RIGHT);
+	    closeButton.setOnAction(event -> {
+	        closeButtonPressed = true;
+	        stopVideo();
+	    });
 
-        pane.getChildren().add(closeButton);
-    }
+	    pane.getChildren().add(closeButton);
+	}
 	
 	private void resetGame() {
 	    // 重新初始化遊戲相關資料
@@ -525,14 +536,11 @@ public class Game {
 	    stopVideo();
 	}
 	private void stopVideo() {
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            pane.getChildren().remove(mediaView);
-        }
-        if (closeButton != null) {
-            pane.getChildren().remove(closeButton);
-        }
-    }
+	    // 停止播放视频并清理相关资源
+	    mediaPlayer.stop();
+	    pane.getChildren().removeAll(mediaView, closeButton);
+	    closeButtonPressed = false;
+	}
 
 
 	public Scene getScene() {
