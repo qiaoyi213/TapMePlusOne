@@ -25,7 +25,7 @@ public class TButton extends Button{
 	}
 	
 	public void updateColor() {
-		this.setBackground(Background.fill(Color.BLUE)); 
-		
+		this.setBackground(Background.fill(BlockColor.getBackgroundColor(Integer.parseInt(this.getText()))));
+		this.setTextFill(BlockColor.getNumberColor(Integer.parseInt(this.getText())));
 	}
 }
