@@ -42,7 +42,7 @@ public class BlockColor {
 			"FF5353"
 	};
 	public static Color getBackgroundColor(int i) {
-		return Color.web(bgColor[i], 1.0);
+		return Color.web(bgColor[i]);
 	}
 	public static Color getNumberColor(int i) {
 		return Color.web(numColor[i]);
