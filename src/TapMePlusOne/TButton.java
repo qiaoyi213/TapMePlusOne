@@ -21,7 +21,6 @@ public class TButton extends Button{
 	}
 	public void setVal(int val) {
 		this.setText(Integer.toString(val));
-		System.out.println("Set val");
 		updateColor();
 	}
 	
