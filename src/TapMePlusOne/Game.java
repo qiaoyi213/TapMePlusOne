@@ -456,7 +456,7 @@ public class Game {
 	    gameOverText.setStrokeWidth(2);
 	    gameOverText.setX(120);
 	    gameOverText.setY(400);
-	    gameOverText.setId("gameOverText"); // 設定 ID 以便識別
+	    //gameOverText.setId("gameOverText"); // 設定 ID 以便識別
 
 	    // 創建重新開始按鈕
 	    Button restartBtn = new Button("Restart");
@@ -466,10 +466,11 @@ public class Game {
 	    restartBtn.setOnAction(event -> {
 	        resetGame();
 	    });
-	    restartBtn.setId("restartBtn"); // 設定 ID 以便識別
+	    //restartBtn.setId("restartBtn"); // 設定 ID 以便識別
 
 	    // 加入遊戲結束文字和重新開始按鈕到畫面
 	    pane.getChildren().addAll(gameOverText, restartBtn);
+	    
 	}
 
 	private void resetGame() {
