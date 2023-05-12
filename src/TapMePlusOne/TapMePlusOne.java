@@ -15,7 +15,7 @@ public class TapMePlusOne extends Application{
 	public void start(Stage primaryStage) throws MalformedURLException {
 		// Create the animation pane
 	    Pane animationPane = new Pane();
-	    Scene animationScene = new Scene(animationPane, 512, 720);
+	    Scene animationScene = new Scene(animationPane, 600, 1024);
 	    primaryStage.setScene(animationScene);
 	    primaryStage.show();
 
@@ -24,8 +24,8 @@ public class TapMePlusOne extends Application{
 	    Media media = new Media(mediaFile.toURI().toURL().toString());
 	    MediaPlayer mediaPlayer = new MediaPlayer(media);
 	    MediaView mediaView = new MediaView(mediaPlayer);
-	    mediaView.setFitWidth(512);
-	    mediaView.setFitHeight(720);
+	    mediaView.setFitWidth(600);
+	    mediaView.setFitHeight(1024);
 	    animationPane.getChildren().add(mediaView);
 
 	    // Play the video

@@ -20,8 +20,8 @@ public class Menu {
 	    Pane helpPane = new Pane();
 	    Image backgroundImage = new Image("file:resources/help_background.png");
         ImageView help_backgroundImageView = new ImageView(backgroundImage);
-        help_backgroundImageView.setFitWidth(512);
-        help_backgroundImageView.setFitHeight(720);
+        help_backgroundImageView.setFitWidth(600);
+        help_backgroundImageView.setFitHeight(1024);
         helpPane.getChildren().add(help_backgroundImageView);
 	    /*Text helpText = new Text("App Guide");
 	    helpText.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 24));
@@ -60,7 +60,7 @@ public class Menu {
 	        stage.show();
 	    });
 
-	    Scene helpScene = new Scene(helpPane, 512, 720);
+	    Scene helpScene = new Scene(helpPane, 600, 1024);
 	    return helpScene;
 	}
 
@@ -69,8 +69,8 @@ public class Menu {
 		// Background image
         Image backgroundImage = new Image("file:resources/background.png");
         ImageView backgroundImageView = new ImageView(backgroundImage);
-        backgroundImageView.setFitWidth(512);
-        backgroundImageView.setFitHeight(720);
+        backgroundImageView.setFitWidth(600);
+        backgroundImageView.setFitHeight(1024);
         menuPane.getChildren().add(backgroundImageView);
 
 		// Title
@@ -86,7 +86,7 @@ public class Menu {
         // Start button
         Button startBtn = new Button("Start");
         startBtn.setPrefSize(100, 50);
-        startBtn.setLayoutX(206);
+        startBtn.setLayoutX(250);
         startBtn.setLayoutY(450);
         startBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
         menuPane.getChildren().add(startBtn);
@@ -101,7 +101,7 @@ public class Menu {
         // Help button
         Button helpBtn = new Button("Help");
         helpBtn.setPrefSize(100, 50);
-        helpBtn.setLayoutX(206);
+        helpBtn.setLayoutX(250);
         helpBtn.setLayoutY(550);
         helpBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
         menuPane.getChildren().add(helpBtn);
@@ -114,7 +114,7 @@ public class Menu {
             stage.show();
         });
         
-        menuScene = new Scene(menuPane, 512, 720);
+        menuScene = new Scene(menuPane, 600, 1024);
     }
 	public Scene getScene() {
 		return this.menuScene;
