@@ -34,6 +34,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 public class Game {
 	
 	private TButton[][] pad;
@@ -130,6 +131,7 @@ public class Game {
 				});
 				nowBtn.setTranslateX(30+110*(j-1));
 				nowBtn.setTranslateY(270+(i-1)*110);
+				
 			}
 		}
 	    score = new Text(Integer.toString(0));
