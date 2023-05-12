@@ -47,7 +47,7 @@ public class Video {
 		pane.getChildren().add(mediaView);
 
 		pane.getChildren().add(closeButton);
-		return new Scene(pane, 512, 720); 
+		return new Scene(pane, 600, 1024); 
 	}
 	public void stop() {
 		this.mediaPlayer.stop();
