@@ -3,6 +3,7 @@ import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
+import java.net.MalformedURLException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -476,8 +477,20 @@ public class Game {
 	    restartBtn.setLayoutY(500);
 	    restartBtn.setId("restartBtn"); // 設定 ID 以便識別
 	    restartBtn.setOnAction(event -> {
-	    	String videoUrl = "https://imgur.com/hoqa6d6";
-	    	playVideo(videoUrl);
+	    	String videoUrl = "file:resources/ads.mp4";
+	    	Video v;
+			try {
+				v = new Video(videoUrl,(Stage)this.getScene().getWindow(), this.getScene());
+		    	v.play();
+		    	
+		    	Stage stage = (Stage)this.getScene().getWindow();
+		    	stage.setScene(v.getScene());
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		    //showCloseButton();
 	        resetGame();
 	    });
 
@@ -485,47 +498,13 @@ public class Game {
 	    pane.getChildren().addAll(gameOverText, restartBtn);
 	    
 	}
-	private void playVideo(String videoUrl) {
-	    Media media = new Media(videoUrl);
-	    mediaPlayer = new MediaPlayer(media);
-	    mediaView = new MediaView(mediaPlayer);
-	    pane.getChildren().add(mediaView);
-	    mediaPlayer.play();
-
-	    mediaPlayer.setOnEndOfMedia(() -> {
-	        showCloseButton();
-	        mediaPlayer.setOnEndOfMedia(null); // Reset the event handler
-	    });
-
-	    mediaPlayer.setOnStopped(() -> {
-	        // Check if the video was stopped by the user (close button) rather than reaching the end
-	        if (mediaPlayer.getStatus() == MediaPlayer.Status.STOPPED && closeButtonPressed) {
-	            resetGame();
-	        }
-	    });
-
-	    showCloseButton();
-	}
 	
-	private void showCloseButton() {
-	    closeButton = new Button("✕");
-	    closeButton.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 20));
-	    closeButton.setAlignment(Pos.TOP_RIGHT);
-	    closeButton.setOnAction(event -> {
-	        closeButtonPressed = true;
-	        stopVideo();
-	    });
-
-	    pane.getChildren().add(closeButton);
-	}
 	
 	private void resetGame() {
 	    // 重新初始化遊戲相關資料
-	    for (int i = 1; i <= 5; i++) {
-	        for (int j = 1; j <= 5; j++) {
-	            this.pad[i][j].setVal((int) (Math.random() * 6) + 1);
-	        }
-	    }
+
+		shufflePad();
+		
 	    this.score.setText("0");
 	    this.life = 5;
 	    for(int i=0;i<5;i++) {
@@ -540,13 +519,6 @@ public class Game {
 	    // 啟用按鈕
 	    disable_pad(false);
 	    playing = false;
-	    stopVideo();
-	}
-	private void stopVideo() {
-	    // 停止播放视频并清理相关资源
-	    mediaPlayer.stop();
-	    pane.getChildren().removeAll(mediaView, closeButton);
-	    closeButtonPressed = false;
 	}
 
 
