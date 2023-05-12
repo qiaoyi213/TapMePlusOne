@@ -144,7 +144,7 @@ public class Game {
 				
 			}
 		}
-		this.mainScene = new Scene(this.pane,600, 1024);
+		this.mainScene = new Scene(this.pane, 600, 1024);
 	}
 	private int getButtonNumber(Button btn) {
 		return Integer.parseInt(btn.getText());
