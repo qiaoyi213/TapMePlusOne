@@ -385,11 +385,18 @@ public class Game {
 					System.out.print(" ");
 					System.out.println(j);
 					System.out.println(playing);
+					
 					while(flag) {
 						if(playing == false) {
 							System.out.println("RUNBFS");
 							bfs(i,j,true);
 							flag = false;
+						}
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
 					}
 				}
