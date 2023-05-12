@@ -502,11 +502,9 @@ public class Game {
 	
 	private void resetGame() {
 	    // 重新初始化遊戲相關資料
-	    for (int i = 1; i <= 5; i++) {
-	        for (int j = 1; j <= 5; j++) {
-	            this.pad[i][j].setVal((int) (Math.random() * 6) + 1);
-	        }
-	    }
+
+		shufflePad();
+		
 	    this.score.setText("0");
 	    this.life = 5;
 	    for(int i=0;i<5;i++) {
