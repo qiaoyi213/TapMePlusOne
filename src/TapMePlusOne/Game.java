@@ -94,9 +94,9 @@ public class Game {
 	    stopBtn.setTranslateY(30);
 	    pane.getChildren().add(stopBtn);
 	    
-	    Text aboveText = new Text("TARGET         SCORE");
+	    Text aboveText = new Text("SCORE");
 	    aboveText.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 30));
-	    aboveText.setX(130);
+	    aboveText.setX(300);
 	    aboveText.setY(30);
 	    pane.getChildren().add(aboveText);
 	
