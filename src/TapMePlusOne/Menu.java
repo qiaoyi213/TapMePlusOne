@@ -1,5 +1,6 @@
 package TapMePlusOne;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -7,6 +8,9 @@ import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.awt.Color;
+
 import javafx.scene.Scene;
 
 public class Menu {
@@ -14,32 +18,38 @@ public class Menu {
 	private Pane menuPane;
 	private Scene createHelpScene() {
 	    Pane helpPane = new Pane();
-	    Text helpText = new Text("App Guide");
+	    Image backgroundImage = new Image("file:resources/help_background.png");
+        ImageView help_backgroundImageView = new ImageView(backgroundImage);
+        help_backgroundImageView.setFitWidth(512);
+        help_backgroundImageView.setFitHeight(720);
+        helpPane.getChildren().add(help_backgroundImageView);
+	    /*Text helpText = new Text("App Guide");
 	    helpText.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 24));
 	    helpText.setX(175);
 	    helpText.setY(25);
 	    helpPane.getChildren().add(helpText);
-	    
+	    */
 	    
 	    Text guideText = new Text("1. 點擊任一方塊，方塊+1 \n2. 消除三塊以上相同數字的方塊");
 	    guideText.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 16));
+	    guideText.setFill(Paint.valueOf("WHITE"));   
 	    guideText.setX(125);
-	    guideText.setY(50);
+	    guideText.setY(620);
 	    helpPane.getChildren().add(guideText);
 	    
 	    
 	    ImageView imageView = new ImageView(new Image("file:resources/guide.jpeg"));
-	    imageView.setLayoutX(150);
+	    imageView.setLayoutX(131);
 	    imageView.setLayoutY(100);
 	    imageView.setFitWidth(250);
 	    imageView.setFitHeight(500);
 	    helpPane.getChildren().add(imageView);
 	    
 	    Button backButton = new Button("Back");
-	    backButton.setPrefSize(100, 50);
-	    backButton.setLayoutX(200);
-	    backButton.setLayoutY(600);
-	    backButton.setStyle("-fx-background-color: purple; -fx-text-fill: white; -fx-font-size: 20pt;");
+	    backButton.setPrefSize(80, 40);
+	    backButton.setLayoutX(216);
+	    backButton.setLayoutY(660);
+	    backButton.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 16pt;");
 	    helpPane.getChildren().add(backButton);
 
 	    // Back button onClick event
@@ -56,19 +66,29 @@ public class Menu {
 
 	public Menu(){
 		menuPane = new Pane();
+		// Background image
+        Image backgroundImage = new Image("file:resources/background.png");
+        ImageView backgroundImageView = new ImageView(backgroundImage);
+        backgroundImageView.setFitWidth(512);
+        backgroundImageView.setFitHeight(720);
+        menuPane.getChildren().add(backgroundImageView);
+
 		// Title
+        /*
         Text title = new Text("Tap +1");
         title.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 68));
         title.setX(150);
         title.setY(250);
+        title.setFill(Paint.valueOf("WHITE"));    
         menuPane.getChildren().add(title);
+        */
         
         // Start button
         Button startBtn = new Button("Start");
         startBtn.setPrefSize(100, 50);
-        startBtn.setLayoutX(200);
-        startBtn.setLayoutY(400);
-        startBtn.setStyle("-fx-background-color: purple; -fx-text-fill: white; -fx-font-size: 20pt;");
+        startBtn.setLayoutX(206);
+        startBtn.setLayoutY(450);
+        startBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
         menuPane.getChildren().add(startBtn);
         // Start button onClick event
         startBtn.setOnAction(event -> {
@@ -81,9 +101,9 @@ public class Menu {
         // Help button
         Button helpBtn = new Button("Help");
         helpBtn.setPrefSize(100, 50);
-        helpBtn.setLayoutX(200);
-        helpBtn.setLayoutY(500);
-        helpBtn.setStyle("-fx-background-color: lightgray; -fx-text-fill: black; -fx-font-size: 20pt;");
+        helpBtn.setLayoutX(206);
+        helpBtn.setLayoutY(550);
+        helpBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
         menuPane.getChildren().add(helpBtn);
     	// Help button onClick event
         helpBtn.setOnAction(event -> {
