@@ -47,11 +47,7 @@ public class Game {
 	private Scene mainScene;
 	private Direction[][] e;
 	Stack<Character>[][] moving;
-    private MediaPlayer mediaPlayer;
-    private MediaView mediaView;
-    private Button closeButton;
-	private boolean closeButtonPressed;
-    
+ 
 	public Game(){
 		this.pane = new Pane();
 		vis = new boolean[7][7];
@@ -103,7 +99,7 @@ public class Game {
 	
 	    
 		this.pad = new TButton[7][7];		
-		
+
 		for(int i=1;i<=5;i++) {
 			for(int j=0;j<=5;j++) {
 				this.pad[i][j] = new TButton();
@@ -484,7 +480,6 @@ public class Game {
 			try {
 				v = new Video(videoUrl,(Stage)this.getScene().getWindow(), this.getScene());
 		    	v.play();
-		    	
 		    	Stage stage = (Stage)this.getScene().getWindow();
 		    	stage.setScene(v.getScene());
 			} catch (MalformedURLException e) {
