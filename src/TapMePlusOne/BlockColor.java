@@ -20,8 +20,6 @@ public class BlockColor {
 			"E0E0E0",
 			"FFE8BF",
 			"FF9C9C"
-			
-			
 	};
 	private final static String[] numColor = {
 			"",
