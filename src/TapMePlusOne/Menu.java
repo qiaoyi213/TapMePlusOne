@@ -47,7 +47,7 @@ public class Menu {
 	    
 	    Button backButton = new Button("Back");
 	    backButton.setPrefSize(80, 40);
-	    backButton.setLayoutX(216);
+	    backButton.setLayoutX(300);
 	    backButton.setLayoutY(660);
 	    backButton.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 16pt;");
 	    helpPane.getChildren().add(backButton);
@@ -86,7 +86,7 @@ public class Menu {
         // Start button
         Button startBtn = new Button("Start");
         startBtn.setPrefSize(100, 50);
-        startBtn.setLayoutX(206);
+        startBtn.setLayoutX(250);
         startBtn.setLayoutY(450);
         startBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
         menuPane.getChildren().add(startBtn);
@@ -101,7 +101,7 @@ public class Menu {
         // Help button
         Button helpBtn = new Button("Help");
         helpBtn.setPrefSize(100, 50);
-        helpBtn.setLayoutX(206);
+        helpBtn.setLayoutX(250);
         helpBtn.setLayoutY(550);
         helpBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
         menuPane.getChildren().add(helpBtn);
