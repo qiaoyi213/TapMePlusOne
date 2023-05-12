@@ -60,7 +60,7 @@ public class Menu {
 	        stage.show();
 	    });
 
-	    Scene helpScene = new Scene(helpPane, 600, 1024);
+	    Scene helpScene = new Scene(helpPane, 512, 720);
 	    return helpScene;
 	}
 
@@ -86,7 +86,7 @@ public class Menu {
         // Start button
         Button startBtn = new Button("Start");
         startBtn.setPrefSize(100, 50);
-        startBtn.setLayoutX(250);
+        startBtn.setLayoutX(206);
         startBtn.setLayoutY(450);
         startBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
         menuPane.getChildren().add(startBtn);
@@ -101,7 +101,7 @@ public class Menu {
         // Help button
         Button helpBtn = new Button("Help");
         helpBtn.setPrefSize(100, 50);
-        helpBtn.setLayoutX(250);
+        helpBtn.setLayoutX(206);
         helpBtn.setLayoutY(550);
         helpBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
         menuPane.getChildren().add(helpBtn);
