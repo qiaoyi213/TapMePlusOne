@@ -16,6 +16,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -47,9 +48,15 @@ public class Game {
 	private Scene mainScene;
 	private Direction[][] e;
 	Stack<Character>[][] moving;
- 
+
 	public Game(){
 		this.pane = new Pane();
+		Image gamebackgroundImage = new Image("file:resources/game_background.png");
+        ImageView game_backgroundImageView = new ImageView(gamebackgroundImage);
+        game_backgroundImageView.setFitWidth(600);
+        game_backgroundImageView.setFitHeight(1024);
+        this.pane.getChildren().add(game_backgroundImageView);
+        
 		vis = new boolean[7][7];
 		this.playing = false;
 		life = 5;
@@ -60,8 +67,7 @@ public class Game {
 			this.lifeBar.get(i).setTranslateY(200);
 			pane.getChildren().add(this.lifeBar.get(i));
 		}
-        
-		
+	
 		Button stopBtn = new Button();
 		Image stopImage = new Image("file:resources/stop.png");
 		ImageView stopImageView = new ImageView(stopImage);
@@ -93,7 +99,8 @@ public class Game {
 	    
 	    Text aboveText = new Text("SCORE");
 	    aboveText.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 30));
-	    aboveText.setX(300);
+	    aboveText.setFill(Paint.valueOf("WHITE")); 
+	    aboveText.setX(260);
 	    aboveText.setY(30);
 	    pane.getChildren().add(aboveText);
 	
@@ -132,14 +139,14 @@ public class Game {
 		}
 	    score = new Text(Integer.toString(0));
 	    score.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 30));
-	    score.setX(430);
+	    score.setFill(Paint.valueOf("WHITE")); 
+	    score.setX(290);
 	    score.setY(80);
 	    pane.getChildren().add(score);
 	    
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
 				this.pane.getChildren().add(this.pad[i][j]);
-				
 			}
 		}
 		this.mainScene = new Scene(this.pane, 600, 1024);

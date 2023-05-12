@@ -48,7 +48,7 @@ public class TapMePlusOne extends Application{
 		pane.getChildren().add(mediaView);
 		primaryStage.setScene(new Scene(pane, 512, 720));
 		*/
-		//primaryStage.setTitle("Tap Me +1");
+		primaryStage.setTitle("Tap Me +1");
 		//primaryStage.show();
 		
 	}
