@@ -162,22 +162,12 @@ public class Game {
 		
 		q.add(new Pair<Integer, Integer>(x,y));
 		int target = getButtonNumber(this.pad[x][y]);
-		System.out.println(target);
-		System.out.print(x);
-		System.out.print(" ");
-		System.out.println(y);
-		//showPad();
 		vis = new boolean[7][7];
 		e = new Direction[7][7];
 		while(q.size() > 0) {
 			Pair<Integer, Integer> now = q.poll();
 			int nowX = now.getKey();
 			int nowY = now.getValue();
-			/*
-			System.out.print(nowX);
-			System.out.print(" ");
-			System.out.println(nowY);
-			*/
 			if(nowX+1 <= 5 && nowX+1 >= 1 && nowY >= 1 && nowY <= 5 && vis[nowX+1][nowY] == false && getButtonNumber(this.pad[nowX+1][nowY]) == target) {
 				vis[nowX+1][nowY] = true;
 				q.add(new Pair<Integer, Integer>(nowX+1, nowY));
@@ -223,23 +213,19 @@ public class Game {
 					showGameOver();
 				}
 			}
-			System.out.print("LIFE: ");
-			System.out.println(this.life);
 			return;
 		}
 		
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
 				if(vis[i][j]) {
-					//System.out.print(i);
-					//System.out.print(" ");
-					//System.out.print(j);
-					print(i,j,x,y,moving[i][j]);
+					print(i,j,x,y, moving[i][j]);
+
 					System.out.println("");
 				}
 			}
-			
 		}
+		
 		vis[x][y] = false;
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
@@ -274,10 +260,13 @@ public class Game {
 	}
 	private void print(int a,int b, int tx, int ty, Stack<Character> st) {
 		if(a == tx && b == ty)return;
-		if(e[a][b] == null)return;
+		if(e[a][b] == null) {
+			System.out.println("NULL E");
+			return;
+		}
 		print(e[a][b].x,e[a][b].y,tx,ty,st);
 		st.add(e[a][b].dir);
-		//System.out.print(e[a][b].dir);
+		System.out.print(e[a][b].dir);
 	}
 	
 	public void padding() {
@@ -306,7 +295,6 @@ public class Game {
 				}
 			}
 		}
-
 		st.getChildren().add(t);
 		
 		st.setOnFinished(e->{
@@ -348,7 +336,6 @@ public class Game {
 						t.getKeyFrames().add(move(this.pad[i][j],'D'));
 						st.getChildren().add(t);
 					}
-					
 				}
 			}
 		}
@@ -357,10 +344,7 @@ public class Game {
 			disable_pad(false);
 			Scanner s = new Scanner(System.in);
 			System.out.println("SCAN");
-
-			//dev(x,y);
 			scan_pad();
-			
 		});
 		st.play();
 	}
@@ -380,31 +364,29 @@ public class Game {
 			for(int i=5;i>=1;i--) {
 				for(int j=1;j<=5;j++) {
 					boolean flag = true;
+					/*
 					System.out.print("scan the point: ");
 					System.out.print(i);
 					System.out.print(" ");
 					System.out.println(j);
 					System.out.println(playing);
-					
+					*/
 					while(flag) {
-						if(playing == false) {
-							System.out.println("RUNBFS");
-							bfs(i,j,true);
-							flag = false;
-						}
 						try {
+							if(playing == false) {
+								//System.out.println("RUNBFS");
+								bfs(i,j,true);
+								flag = false;
+							}
 							Thread.sleep(1);
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
 				}
 			}
 		});
-				
 		thread.start();
-
 	}
 	private void add_new_block(int x,int y) {
 		this.pad[x][y].setVal((int)(Math.random()*5)+1);
