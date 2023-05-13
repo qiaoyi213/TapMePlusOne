@@ -16,6 +16,9 @@ public class TButton extends Button{
 		this.setOnMouseReleased(e ->{
 			updateColor();
 		});
+
+		this.setPrefSize(100, 100);
+		this.setStyle("-fx-border-radius: 50; -fx-font-size:40");
 	}
 	
 	public void setPos(int x,int y) {
