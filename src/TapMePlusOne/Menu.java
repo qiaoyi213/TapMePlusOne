@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.awt.Color;
+import java.util.List;
 
 import javafx.scene.Scene;
 
@@ -91,13 +92,27 @@ public class Menu {
         startBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
         menuPane.getChildren().add(startBtn);
         // Start button onClick event
+        
         startBtn.setOnAction(event -> {
             Game game = new Game();
             Stage stage = (Stage) startBtn.getScene().getWindow();
             stage.setScene(game.getScene());
             stage.show();
         });
-        
+        Button continueBtn = new Button("Continue");
+        continueBtn.setPrefSize(100, 50);
+        continueBtn.setLayoutX(250);
+        continueBtn.setLayoutY(350);
+        continueBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
+        menuPane.getChildren().add(continueBtn);
+        continueBtn.setOnAction(event -> {
+        	Game game = new Game();
+            List<Object> record = Persistence.readPad();  
+            game.loadGame((int[][])record.get(0), (int)record.get(1), (int)record.get(2));
+            Stage stage = (Stage) startBtn.getScene().getWindow();
+            stage.setScene(game.getScene());
+            stage.show();
+        });
         // Help button
         Button helpBtn = new Button("Help");
         helpBtn.setPrefSize(100, 50);

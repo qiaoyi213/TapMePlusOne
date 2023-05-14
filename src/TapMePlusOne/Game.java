@@ -113,7 +113,14 @@ public class Game {
 			}
 		}
 		shufflePad();
-		
+
+	    score = new Text(Integer.toString(0));
+	    score.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 30));
+	    score.setFill(Paint.valueOf("WHITE")); 
+	    score.setX(290);
+	    score.setY(80);
+	    pane.getChildren().add(score);
+	    
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
 				final TButton nowBtn = this.pad[i][j];
@@ -129,18 +136,14 @@ public class Game {
 							break;
 						}
 					}
+
+					Persistence.saveGame(this.pad, Integer.parseInt(this.score.getText()), this.life);
 				});
 				nowBtn.setTranslateX(30+110*(j-1));
 				nowBtn.setTranslateY(270+(i-1)*110);
-				
+
 			}
 		}
-	    score = new Text(Integer.toString(0));
-	    score.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 30));
-	    score.setFill(Paint.valueOf("WHITE")); 
-	    score.setX(290);
-	    score.setY(80);
-	    pane.getChildren().add(score);
 	    
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
@@ -148,6 +151,20 @@ public class Game {
 			}
 		}
 		this.mainScene = new Scene(this.pane, 600, 1024);
+		
+	}
+	public void loadGame(int[][] pad, int score, int life) {
+		
+		this.score.setText(Integer.toString(score));
+		this.life = life;
+		for(int i=1;i<=5;i++) {
+			for(int j=1;j<=5;j++) {
+				this.pad[i][j].setText(Integer.toString(pad[i][j]));
+				this.pad[i][j].updateColor();
+			}
+		}
+		updateLife();
+		
 	}
 	private int getButtonNumber(Button btn) {
 		return Integer.parseInt(btn.getText());
@@ -157,7 +174,6 @@ public class Game {
 		playing = true;
 		disable_pad(true);
 		Queue<Pair<Integer,Integer>> q = new LinkedList<>();
-		
 		q.add(new Pair<Integer, Integer>(x,y));
 		int target = getButtonNumber(this.pad[x][y]);
 		vis = new boolean[7][7];
@@ -206,10 +222,7 @@ public class Game {
 			playing = false;
 			if(!isScan) {
 				decreaseLife();
-				if(this.life <= 0) {
-					System.out.println("GAME OVER");
-					showGameOver();
-				}
+				
 			}
 			return;
 		}
@@ -426,8 +439,21 @@ public class Game {
 		}
 		System.out.println("");
 	}
+	public void updateLife() {
+		for(int i=0;i<5;i++) {
+			this.lifeBar.get(i).setVisible(false);
+		}
+		for(int i=0;i<this.life;i++) {
+			this.lifeBar.get(i).setVisible(true);
+		}
+	}
 	private void decreaseLife() {
+		
         this.life--;
+        if(this.life <= 0) {
+			System.out.println("GAME OVER");
+			showGameOver();
+		}
         this.lifeBar.get(this.life).setVisible(false);
     }
 	private void increaseLife() {
@@ -483,6 +509,7 @@ public class Game {
 
 		    //showCloseButton();
 	        resetGame();
+			Persistence.saveGame(this.pad, Integer.parseInt(this.score.getText()), this.life);
 	    });
 
 	    // 加入遊戲結束文字和重新開始按鈕到畫面
