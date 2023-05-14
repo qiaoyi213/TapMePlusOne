@@ -126,6 +126,8 @@ public class Game {
 				final TButton nowBtn = this.pad[i][j];
 				final int x = i;
 				final int y = j;
+				nowBtn.setPrefSize(100, 100);
+				nowBtn.setStyle("-fx-border-radius: 50; -fx-font-size:40");
 				nowBtn.setPos(x,y);
 				nowBtn.setOnAction(event-> {
 					nowBtn.setVal(Integer.parseInt(nowBtn.getText())+1);
