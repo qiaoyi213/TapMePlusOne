@@ -180,13 +180,16 @@ public class Game {
 		int target = getButtonNumber(this.pad[x][y]);
 		vis = new boolean[7][7];
 		e = new Direction[7][7];
+		vis[x][y] = true;
 		while(q.size() > 0) {
 			Pair<Integer, Integer> now = q.poll();
 			int nowX = now.getKey();
 			int nowY = now.getValue();
+			
 			if(nowX+1 <= 5 && nowX+1 >= 1 && nowY >= 1 && nowY <= 5 && vis[nowX+1][nowY] == false && getButtonNumber(this.pad[nowX+1][nowY]) == target) {
 				vis[nowX+1][nowY] = true;
 				q.add(new Pair<Integer, Integer>(nowX+1, nowY));
+				
 				e[nowX+1][nowY] = new Direction(nowX, nowY, 'U');
 			}
 			if(nowX-1 <= 5 && nowX-1 >= 1 && nowY >= 1 && nowY <= 5 && vis[nowX-1][nowY] == false && getButtonNumber(this.pad[nowX-1][nowY]) == target) {
@@ -211,7 +214,25 @@ public class Game {
 				moving[i][j] = new Stack<Character>();
 			}
 		}
+		for(int i=1;i<=5;i++) {
+			for(int j=1;j<=5;j++) {
+				System.out.print(getButtonNumber(this.pad[i][j]));
+			}
+			System.out.println("");
+		}
+		for(int i=1;i<=5;i++) {
+			for(int j=1;j<=5;j++) {
+				if(e[i][j] == null) {
+					System.out.print('X');
+				}
+				else {
+					System.out.print(e[i][j].dir);
+				}
+			}
+			System.out.println("");
+		}
 		int counter = 0;
+		
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
 				if(vis[i][j] == true) {
@@ -224,16 +245,14 @@ public class Game {
 			playing = false;
 			if(!isScan) {
 				decreaseLife();
-				
 			}
 			return;
 		}
-		
+		vis[x][y] = false;
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
 				if(vis[i][j]) {
 					print(i,j,x,y, moving[i][j]);
-
 					System.out.println("");
 				}
 			}
@@ -275,10 +294,11 @@ public class Game {
 	private void print(int a,int b, int tx, int ty, Stack<Character> st) {
 		if(a == tx && b == ty)return;
 		if(a > 5 || a < 1 || b > 5 || b < 1)return;
-		if(e[a][b] == null) {
+		if(vis[a][b] == false) {
 			System.out.println("NULL E");
 			return;
 		}
+		System.out.printf("METHOD PRINT: %d %d %d %d\n",e[a][b].x,e[a][b].y, tx, ty );
 		print(e[a][b].x,e[a][b].y,tx,ty,st);
 		st.add(e[a][b].dir);
 		System.out.print(e[a][b].dir);
