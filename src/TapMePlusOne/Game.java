@@ -270,9 +270,11 @@ public class Game {
 			padding();
 		});
 		sq.play();
+		System.gc();
 	}
 	private void print(int a,int b, int tx, int ty, Stack<Character> st) {
 		if(a == tx && b == ty)return;
+		if(a > 5 || a < 1 || b > 5 || b < 1)return;
 		if(e[a][b] == null) {
 			System.out.println("NULL E");
 			return;
