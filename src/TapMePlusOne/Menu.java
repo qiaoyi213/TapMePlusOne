@@ -99,7 +99,7 @@ public class Menu {
             stage.setScene(game.getScene());
             stage.show();
         });
-        Button continueBtn = new Button("Continue");
+        Button continueBtn = new Button("繼續");
         continueBtn.setPrefSize(100, 50);
         continueBtn.setLayoutX(250);
         continueBtn.setLayoutY(350);

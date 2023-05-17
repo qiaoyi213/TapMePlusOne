@@ -35,21 +35,8 @@ public class TapMePlusOne extends Application{
 	    mediaPlayer.setOnEndOfMedia(() -> {
 	        primaryStage.setScene(new Menu().getScene());
 	    });
-	    
-		//Menu menu = new Menu();
-		//primaryStage.setScene(menu.getScene());
-		/*
-		File mediaFile = new File("resources/ads.mp4");
-		Media media = new Media(mediaFile.toURI().toURL().toString());
-		MediaPlayer mediaPlayer = new MediaPlayer(media);
-		MediaView mediaView = new MediaView(mediaPlayer);
-		mediaPlayer.play();
-		Pane pane = new Pane();
-		pane.getChildren().add(mediaView);
-		primaryStage.setScene(new Scene(pane, 512, 720));
-		*/
 		primaryStage.setTitle("Tap Me +1");
-		//primaryStage.show();
+		
 		
 	}
 	public static void main(String[] args) {

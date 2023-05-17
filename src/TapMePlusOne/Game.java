@@ -134,7 +134,11 @@ public class Game {
 					disable_pad(true);
 					while(true) {
 						if(playing == false) {
-							bfs(nowBtn.getI(),nowBtn.getJ(), false);
+							try {
+								bfs(nowBtn.getI(),nowBtn.getJ(), false);
+							} catch(NullPointerException e) {
+								System.out.println("AA");
+							}
 							break;
 						}
 					}
@@ -166,13 +170,12 @@ public class Game {
 			}
 		}
 		updateLife();
-		
 	}
 	private int getButtonNumber(Button btn) {
 		return Integer.parseInt(btn.getText());
 	}
 
-	private void bfs(int x, int y, boolean isScan) {
+	private synchronized void bfs(int x, int y, boolean isScan) {
 		playing = true;
 		disable_pad(true);
 		Queue<Pair<Integer,Integer>> q = new LinkedList<>();
@@ -180,12 +183,18 @@ public class Game {
 		int target = getButtonNumber(this.pad[x][y]);
 		vis = new boolean[7][7];
 		e = new Direction[7][7];
+		for(int i=1;i<=5;i++) {
+			for(int j=1;j<=5;j++) {
+				e[i][j] = null;
+				vis[i][j] = false;
+			}
+		}
 		vis[x][y] = true;
 		while(q.size() > 0) {
 			Pair<Integer, Integer> now = q.poll();
 			int nowX = now.getKey();
 			int nowY = now.getValue();
-			
+			vis[nowX][nowY] = true;
 			if(nowX+1 <= 5 && nowX+1 >= 1 && nowY >= 1 && nowY <= 5 && vis[nowX+1][nowY] == false && getButtonNumber(this.pad[nowX+1][nowY]) == target) {
 				vis[nowX+1][nowY] = true;
 				q.add(new Pair<Integer, Integer>(nowX+1, nowY));
@@ -214,23 +223,7 @@ public class Game {
 				moving[i][j] = new Stack<Character>();
 			}
 		}
-		for(int i=1;i<=5;i++) {
-			for(int j=1;j<=5;j++) {
-				System.out.print(getButtonNumber(this.pad[i][j]));
-			}
-			System.out.println("");
-		}
-		for(int i=1;i<=5;i++) {
-			for(int j=1;j<=5;j++) {
-				if(e[i][j] == null) {
-					System.out.print('X');
-				}
-				else {
-					System.out.print(e[i][j].dir);
-				}
-			}
-			System.out.println("");
-		}
+
 		int counter = 0;
 		
 		for(int i=1;i<=5;i++) {
@@ -248,6 +241,25 @@ public class Game {
 			}
 			return;
 		}
+		
+		for(int i=1;i<=5;i++) {
+			for(int j=1;j<=5;j++) {
+				System.out.print(getButtonNumber(this.pad[i][j]));
+			}
+			System.out.println("");
+		}
+		for(int i=1;i<=5;i++) {
+			for(int j=1;j<=5;j++) {
+				if(e[i][j] == null) {
+					System.out.print('X');
+				}
+				else {
+					System.out.print(e[i][j].dir);
+				}
+			}
+			System.out.println("");
+		}
+		
 		vis[x][y] = false;
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
@@ -294,7 +306,7 @@ public class Game {
 	private void print(int a,int b, int tx, int ty, Stack<Character> st) {
 		if(a == tx && b == ty)return;
 		if(a > 5 || a < 1 || b > 5 || b < 1)return;
-		if(vis[a][b] == false) {
+		if(vis[a][b] == false || e[a][b] == null) {
 			System.out.println("NULL E");
 			return;
 		}
@@ -377,7 +389,6 @@ public class Game {
 		st.setOnFinished(e -> {
 			playing=false;
 			disable_pad(false);
-			Scanner s = new Scanner(System.in);
 			System.out.println("SCAN");
 			scan_pad();
 		});
@@ -394,27 +405,21 @@ public class Game {
 	}
 	
 	private void scan_pad() {
-	
+		
 		Thread thread = new Thread(() -> {
 			for(int i=5;i>=1;i--) {
 				for(int j=1;j<=5;j++) {
 					boolean flag = true;
-					/*
-					System.out.print("scan the point: ");
-					System.out.print(i);
-					System.out.print(" ");
-					System.out.println(j);
-					System.out.println(playing);
-					*/
 					while(flag) {
+						if(playing == false) {
+							//System.out.println("RUNBFS");
+							bfs(i,j,true);
+							flag = false;
+						}
 						try {
-							if(playing == false) {
-								//System.out.println("RUNBFS");
-								bfs(i,j,true);
-								flag = false;
-							}
-							Thread.sleep(1);
+							Thread.sleep(10);
 						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -472,7 +477,6 @@ public class Game {
 		}
 	}
 	private void decreaseLife() {
-		
         this.life--;
         if(this.life <= 0) {
 			System.out.println("GAME OVER");
