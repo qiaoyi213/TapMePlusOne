@@ -10,7 +10,9 @@ public class RandomMatrix {
 		int[][] matrix = new int[7][7];
 		shuffle(matrix);
 		
+		
 		while(bfs(matrix)) {
+			/*
 			for(int i=1;i<=5;i++) {
 				for(int j=1;j<=5;j++) {
 					System.out.print(matrix[i][j]);
@@ -18,6 +20,7 @@ public class RandomMatrix {
 				System.out.println("");
 			}
 			System.out.println("");
+			*/
 		}
 		
 		return matrix;
@@ -117,13 +120,6 @@ public class RandomMatrix {
 			}	
 		}
 		
-		for(int i=1;i<=5;i++) {
-			for(int j=1;j<=5;j++) {
-				System.out.print(vis[i][j]);
-			}
-			System.out.println("");
-		}
-		System.out.println("aa");
 	}
 	
 }
