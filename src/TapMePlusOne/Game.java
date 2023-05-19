@@ -275,9 +275,13 @@ public class Game {
 		
 		sq.setOnFinished(e -> {
 			increaseLife();
+			
+			/*
 			Platform.runLater(() -> {
 				this.pad[x][y].setVal(Integer.parseInt(this.pad[x][y].getText())+1);
 		    });
+		    */
+			this.pad[x][y].setVal(Integer.parseInt(this.pad[x][y].getText())+1);
 			padding(isScan);
 		});
 		sq.play();
@@ -380,12 +384,14 @@ public class Game {
 		Thread thread = new Thread(() -> {
 			
 			boolean[][] b = new boolean[7][7];
-			while(Utils.isArrayAllFalse(b, 7, 7)) {
-				for(int i=1;i<=5;i++) {
-					for(int j=1;j<=5;j++) {
-						b[i][j] = true;
-					}
+
+			for(int i=1;i<=5;i++) {
+				for(int j=1;j<=5;j++) {
+					b[i][j] = true;
 				}
+			}
+			
+			while(!Utils.isArrayAllFalse(b, 7, 7)) {
 				
 				for(int i=5;i>=1;i--) {
 					for(int j=1;j<=5;j++) {
@@ -393,10 +399,23 @@ public class Game {
 						while(flag) {
 							if(playing == false) {
 								b[i][j] = bfs(i,j,true);
-								flag = false;
+								break;
+							}
+							try {
+								Thread.sleep(100);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
 						}
 					}
+				}
+				for(int i=1;i<=5;i++) {
+					for(int j=1;j<=5;j++) {
+						if(b[i][j] == true)System.out.print("1");
+						else System.out.print("0");
+					}
+					System.out.println("");
 				}
 			}
 			
@@ -412,10 +431,11 @@ public class Game {
 		this.pad[x][y].setVisible(true);
 	}
 	private void disable_pad(boolean flag) {
+		//System.out.printf("Set disable %b \n", flag);
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
 				this.pad[i][j].setDisable(flag);
-				this.pad[i][j].setOpacity(1);
+				//this.pad[i][j].setOpacity(1);
 			}
 		}
 	}
