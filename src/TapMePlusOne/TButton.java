@@ -46,6 +46,8 @@ public class TButton extends Button{
 		this.setBackground(Background.fill(BlockColor.getBackgroundColor(Integer.parseInt(this.getText())).darker()));
 		this.setTextFill(BlockColor.getNumberColor(Integer.parseInt(this.getText())).darker());
 	}
-	
+	public int getButtonNumber() {
+		return Integer.parseInt(this.getText());
+	}
 	
 }

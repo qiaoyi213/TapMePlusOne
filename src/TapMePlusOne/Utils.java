@@ -1,7 +1,14 @@
 package TapMePlusOne;
 
 public class Utils {
-	public boolean validXY(int x, int y) {
-		return x <= 5 && x >= 1 && y >= 1 && y <= 5;
+	public static boolean isArrayAllFalse(boolean[][] b, int x, int y) {
+		for(int i=0;i<x;i++) {
+			for(int j=0;j<y;j++) {
+				if(b[i][j] == true) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 }
