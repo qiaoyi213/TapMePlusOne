@@ -158,6 +158,7 @@ public class Game {
 		this.mainScene = new Scene(this.pane, 600, 1024);
 		
 	}
+	
 	public void loadGame(int[][] pad, int score, int life) {
 		
 		this.score.setText(Integer.toString(score));
@@ -370,6 +371,7 @@ public class Game {
 		}
 		st.setOnFinished(e -> {
 			System.out.println("Playing finished");
+			Persistence.saveGame(this.pad, Integer.parseInt(this.score.getText()), this.life);
 			playing=false;
 			disable_pad(false);
 			if(!isScan) {
@@ -410,6 +412,7 @@ public class Game {
 						}
 					}
 				}
+				
 				for(int i=1;i<=5;i++) {
 					for(int j=1;j<=5;j++) {
 						if(b[i][j] == true)System.out.print("1");
@@ -421,7 +424,6 @@ public class Game {
 			
 		});
 		thread.start();
-		
 	}
 	
 	private void add_new_block(int x,int y) {
