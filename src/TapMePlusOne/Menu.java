@@ -23,6 +23,7 @@ public class Menu {
         ImageView help_backgroundImageView = new ImageView(backgroundImage);
         help_backgroundImageView.setFitWidth(600);
         help_backgroundImageView.setFitHeight(1024);
+        //help_backgroundImageView.setPreserveRatio(true);
         helpPane.getChildren().add(help_backgroundImageView);
 	    /*Text helpText = new Text("App Guide");
 	    helpText.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 24));
@@ -34,22 +35,22 @@ public class Menu {
 	    Text guideText = new Text("1. 點擊任一方塊，方塊+1 \n2. 消除三塊以上相同數字的方塊");
 	    guideText.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 16));
 	    guideText.setFill(Paint.valueOf("WHITE"));   
-	    guideText.setX(125);
-	    guideText.setY(620);
+	    guideText.setX(155);
+	    guideText.setY(700);
 	    helpPane.getChildren().add(guideText);
 	    
 	    
-	    ImageView imageView = new ImageView(new Image("file:resources/guide.jpeg"));
-	    imageView.setLayoutX(131);
+	    ImageView imageView = new ImageView(new Image("file:resources/guide.png"));
+	    imageView.setLayoutX(150);
 	    imageView.setLayoutY(100);
-	    imageView.setFitWidth(250);
-	    imageView.setFitHeight(500);
+	    imageView.setFitWidth(300);
+	    imageView.setFitHeight(550);
 	    helpPane.getChildren().add(imageView);
 	    
 	    Button backButton = new Button("Back");
 	    backButton.setPrefSize(80, 40);
-	    backButton.setLayoutX(300);
-	    backButton.setLayoutY(660);
+	    backButton.setLayoutX(260);
+	    backButton.setLayoutY(750);
 	    backButton.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 16pt;");
 	    helpPane.getChildren().add(backButton);
 
@@ -61,7 +62,7 @@ public class Menu {
 	        stage.show();
 	    });
 
-	    Scene helpScene = new Scene(helpPane, 512, 720);
+	    Scene helpScene = new Scene(helpPane, 600, 1024);
 	    return helpScene;
 	}
 
