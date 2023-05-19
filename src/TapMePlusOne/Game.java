@@ -23,6 +23,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.animation.*;
 import javafx.animation.PathTransition.OrientationType;
+import javafx.application.Platform;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -170,7 +171,7 @@ public class Game {
 		updateLife();
 	}
 
-	private void bfs(int x, int y, boolean isScan) {
+	private boolean bfs(int x, int y, boolean isScan) {
 		playing = true;
 		disable_pad(true);
 		Queue<Pair<Integer,Integer>> q = new LinkedList<>();
@@ -234,7 +235,7 @@ public class Game {
 			if(!isScan) {
 				decreaseLife();
 			}
-			return;
+			return false;
 		}
 		
 		vis[x][y] = false;
@@ -246,7 +247,6 @@ public class Game {
 			}
 		}
 		
-		vis[x][y] = false;
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
 				if(vis[i][j]) {
@@ -254,6 +254,7 @@ public class Game {
 				}
 			}
 		}
+		
 		SequentialTransition sq = new SequentialTransition();
 		boolean flag;
 		do {
@@ -274,10 +275,13 @@ public class Game {
 		
 		sq.setOnFinished(e -> {
 			increaseLife();
-			this.pad[x][y].setVal(Integer.parseInt(this.pad[x][y].getText())+1);
-			padding();
+			Platform.runLater(() -> {
+				this.pad[x][y].setVal(Integer.parseInt(this.pad[x][y].getText())+1);
+		    });
+			padding(isScan);
 		});
 		sq.play();
+		return true;
 	}
 	private void print(int a,int b, int tx, int ty, Stack<Character> st) {
 		if(a == tx && b == ty)return;
@@ -290,7 +294,7 @@ public class Game {
 		
 	}
 	
-	public void padding() {
+	public void padding(boolean isScan) {
 		int[][] b = new int[7][7];
 	
 		for(int i=1;i<=5;i++) {
@@ -319,12 +323,12 @@ public class Game {
 		st.getChildren().add(t);
 		
 		st.setOnFinished(e->{
-			process_block(b);
+			process_block(b, isScan);
 		});
 		st.play();
-		 
+		
 	}
-	private void process_block(int[][] b) {
+	private void process_block(int[][] b, boolean isScan) {
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
 				if(vis[i][j]) {
@@ -361,44 +365,46 @@ public class Game {
 			}
 		}
 		st.setOnFinished(e -> {
+			System.out.println("Playing finished");
 			playing=false;
 			disable_pad(false);
-			scan_pad();
+			if(!isScan) {
+				scan_pad();
+			}
 		});
 		st.play();
-	}
-	private void dev(int i, int j) {
-		boolean flag = true;
-		while(flag) {
-			if(playing == false) {
-				bfs(i,j,true);
-				flag = false;
-			}
-		}
 	}
 	
 	private void scan_pad() {
 		
 		Thread thread = new Thread(() -> {
-			for(int i=5;i>=1;i--) {
-				for(int j=1;j<=5;j++) {
-					boolean flag = true;
-					while(flag) {
-						if(playing == false) {
-							bfs(i,j,true);
-							flag = false;
-						}
-						try {
-							Thread.sleep(10);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
+			
+			boolean[][] b = new boolean[7][7];
+			while(Utils.isArrayAllFalse(b, 7, 7)) {
+				for(int i=1;i<=5;i++) {
+					for(int j=1;j<=5;j++) {
+						b[i][j] = true;
+					}
+				}
+				
+				for(int i=5;i>=1;i--) {
+					for(int j=1;j<=5;j++) {
+						boolean flag = true;
+						while(flag) {
+							if(playing == false) {
+								b[i][j] = bfs(i,j,true);
+								flag = false;
+							}
 						}
 					}
 				}
 			}
+			
 		});
 		thread.start();
+		
 	}
+	
 	private void add_new_block(int x,int y) {
 		this.pad[x][y].setVal((int)(Math.random()*5)+1);
 		this.pad[x][y].setTranslateY(160);
