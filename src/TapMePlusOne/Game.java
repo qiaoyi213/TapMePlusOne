@@ -53,7 +53,7 @@ public class Game {
 
 	public Game(){
 		this.pane = new Pane();
-		Image gamebackgroundImage = new Image("file:resources/game_background.png");
+		Image gamebackgroundImage = new Image("file:resources/game_ver2.png");
         ImageView game_backgroundImageView = new ImageView(gamebackgroundImage);
         game_backgroundImageView.setFitWidth(600);
         game_backgroundImageView.setFitHeight(1024);

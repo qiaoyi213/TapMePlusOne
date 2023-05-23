@@ -20,7 +20,7 @@ public class TapMePlusOne extends Application{
 	    primaryStage.show();
 
 	    // Create the media player
-	    File mediaFile = new File("resources/startanimation.mp4");
+	    File mediaFile = new File("resources/start_ver2.mp4");
 	    Media media = new Media(mediaFile.toURI().toURL().toString());
 	    MediaPlayer mediaPlayer = new MediaPlayer(media);
 	    MediaView mediaView = new MediaView(mediaPlayer);

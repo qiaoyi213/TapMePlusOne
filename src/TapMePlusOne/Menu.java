@@ -1,5 +1,8 @@
 package TapMePlusOne;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -10,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.awt.Color;
+import java.io.File;
 import java.util.List;
 
 import javafx.scene.Scene;
@@ -21,11 +25,14 @@ public class Menu {
 	public Menu(){
 		menuPane = new Pane();
 		// Background image
-        Image backgroundImage = new Image("file:resources/background.png");
+
+        Image backgroundImage = new Image("file:resources/menuback.png");
         ImageView backgroundImageView = new ImageView(backgroundImage);
         backgroundImageView.setFitWidth(600);
         backgroundImageView.setFitHeight(1024);
         menuPane.getChildren().add(backgroundImageView);
+
+	    
 
 		// Title
         /*
@@ -87,24 +94,25 @@ public class Menu {
 	
 	private Scene createHelpScene() {
 		Pane helpPane = new Pane();
-	    Image backgroundImage = new Image("file:resources/help_background.png");
+	    Image backgroundImage = new Image("file:resources/game_ver2.png");
         ImageView help_backgroundImageView = new ImageView(backgroundImage);
         help_backgroundImageView.setFitWidth(600);
         help_backgroundImageView.setFitHeight(1024);
         //help_backgroundImageView.setPreserveRatio(true);
         helpPane.getChildren().add(help_backgroundImageView);
-	    /*Text helpText = new Text("App Guide");
-	    helpText.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 24));
-	    helpText.setX(175);
-	    helpText.setY(25);
+	    Text helpText = new Text("App Guide");
+	    helpText.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 35));
+	    helpText.setFill(Paint.valueOf("WHITE"));  
+	    helpText.setX(220);
+	    helpText.setY(40);
 	    helpPane.getChildren().add(helpText);
-	    */
+	    
 	    
 	    Text guideText = new Text("1. 點擊任一方塊，方塊+1 \n2. 消除三塊以上相同數字的方塊");
 	    guideText.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 16));
 	    guideText.setFill(Paint.valueOf("WHITE"));   
 	    guideText.setX(155);
-	    guideText.setY(700);
+	    guideText.setY(680);
 	    helpPane.getChildren().add(guideText);
 	    
 	    
