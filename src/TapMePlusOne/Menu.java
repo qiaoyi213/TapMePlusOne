@@ -17,8 +17,76 @@ import javafx.scene.Scene;
 public class Menu {
 	private Scene menuScene;
 	private Pane menuPane;
+
+	public Menu(){
+		menuPane = new Pane();
+		// Background image
+        Image backgroundImage = new Image("file:resources/background.png");
+        ImageView backgroundImageView = new ImageView(backgroundImage);
+        backgroundImageView.setFitWidth(600);
+        backgroundImageView.setFitHeight(1024);
+        menuPane.getChildren().add(backgroundImageView);
+
+		// Title
+        /*
+        Text title = new Text("Tap +1");
+        title.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 68));
+        title.setX(150);
+        title.setY(250);
+        title.setFill(Paint.valueOf("WHITE"));    
+        menuPane.getChildren().add(title);
+        */
+        
+        // Start button
+        Button startBtn = new Button("開始");
+        startBtn.setPrefSize(100, 50);
+        startBtn.setLayoutX(250);
+        startBtn.setLayoutY(450);
+        startBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
+        menuPane.getChildren().add(startBtn);
+        // Start button onClick event
+        
+        startBtn.setOnAction(event -> {
+            Game game = new Game();
+            Stage stage = (Stage) startBtn.getScene().getWindow();
+            stage.setScene(game.getScene());
+            stage.show();
+        });
+        Button continueBtn = new Button("繼續");
+        continueBtn.setPrefSize(100, 50);
+        continueBtn.setLayoutX(250);
+        continueBtn.setLayoutY(350);
+        continueBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
+        menuPane.getChildren().add(continueBtn);
+        continueBtn.setOnAction(event -> {
+        	Game game = new Game();
+            List<Object> record = Persistence.readPad();  
+            game.loadGame((int[][])record.get(0), (int)record.get(1), (int)record.get(2));
+            Stage stage = (Stage) startBtn.getScene().getWindow();
+            stage.setScene(game.getScene());
+            stage.show();
+        });
+        // Help button
+        Button helpBtn = new Button("教學");
+        helpBtn.setPrefSize(100, 50);
+        helpBtn.setLayoutX(250);
+        helpBtn.setLayoutY(550);
+        helpBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
+        menuPane.getChildren().add(helpBtn);
+    	// Help button onClick event
+        helpBtn.setOnAction(event -> {
+            Stage stage = (Stage) helpBtn.getScene().getWindow();
+            // Create a new scene for the help page and set it as the current scene
+            Scene helpScene = createHelpScene();
+            stage.setScene(helpScene);
+            stage.show();
+        });
+        
+        menuScene = new Scene(menuPane, 600, 1024);
+    }
+	
 	private Scene createHelpScene() {
-	    Pane helpPane = new Pane();
+		Pane helpPane = new Pane();
 	    Image backgroundImage = new Image("file:resources/help_background.png");
         ImageView help_backgroundImageView = new ImageView(backgroundImage);
         help_backgroundImageView.setFitWidth(600);
@@ -65,73 +133,7 @@ public class Menu {
 	    Scene helpScene = new Scene(helpPane, 600, 1024);
 	    return helpScene;
 	}
-
-	public Menu(){
-		menuPane = new Pane();
-		// Background image
-        Image backgroundImage = new Image("file:resources/background.png");
-        ImageView backgroundImageView = new ImageView(backgroundImage);
-        backgroundImageView.setFitWidth(600);
-        backgroundImageView.setFitHeight(1024);
-        menuPane.getChildren().add(backgroundImageView);
-
-		// Title
-        /*
-        Text title = new Text("Tap +1");
-        title.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 68));
-        title.setX(150);
-        title.setY(250);
-        title.setFill(Paint.valueOf("WHITE"));    
-        menuPane.getChildren().add(title);
-        */
-        
-        // Start button
-        Button startBtn = new Button("Start");
-        startBtn.setPrefSize(100, 50);
-        startBtn.setLayoutX(250);
-        startBtn.setLayoutY(450);
-        startBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
-        menuPane.getChildren().add(startBtn);
-        // Start button onClick event
-        
-        startBtn.setOnAction(event -> {
-            Game game = new Game();
-            Stage stage = (Stage) startBtn.getScene().getWindow();
-            stage.setScene(game.getScene());
-            stage.show();
-        });
-        Button continueBtn = new Button("繼續");
-        continueBtn.setPrefSize(100, 50);
-        continueBtn.setLayoutX(250);
-        continueBtn.setLayoutY(350);
-        continueBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
-        menuPane.getChildren().add(continueBtn);
-        continueBtn.setOnAction(event -> {
-        	Game game = new Game();
-            List<Object> record = Persistence.readPad();  
-            game.loadGame((int[][])record.get(0), (int)record.get(1), (int)record.get(2));
-            Stage stage = (Stage) startBtn.getScene().getWindow();
-            stage.setScene(game.getScene());
-            stage.show();
-        });
-        // Help button
-        Button helpBtn = new Button("Help");
-        helpBtn.setPrefSize(100, 50);
-        helpBtn.setLayoutX(250);
-        helpBtn.setLayoutY(550);
-        helpBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
-        menuPane.getChildren().add(helpBtn);
-    	// Help button onClick event
-        helpBtn.setOnAction(event -> {
-            Stage stage = (Stage) helpBtn.getScene().getWindow();
-            // Create a new scene for the help page and set it as the current scene
-            Scene helpScene = createHelpScene();
-            stage.setScene(helpScene);
-            stage.show();
-        });
-        
-        menuScene = new Scene(menuPane, 600, 1024);
-    }
+	
 	public Scene getScene() {
 		return this.menuScene;
 	}

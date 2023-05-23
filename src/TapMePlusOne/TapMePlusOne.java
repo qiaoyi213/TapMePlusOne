@@ -35,6 +35,10 @@ public class TapMePlusOne extends Application{
 	    mediaPlayer.setOnEndOfMedia(() -> {
 	        primaryStage.setScene(new Menu().getScene());
 	    });
+	    primaryStage.setMaxWidth(600);
+	    primaryStage.setMinWidth(600);
+	    primaryStage.setMaxHeight(1024);
+	    primaryStage.setMinHeight(1024);
 		primaryStage.setTitle("Tap Me +1");
 		
 		
