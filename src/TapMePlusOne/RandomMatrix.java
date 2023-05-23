@@ -121,5 +121,12 @@ public class RandomMatrix {
 		}
 		
 	}
+	public static int maximumNumber(int score) {
+		if(score > 10000) return 8;
+		else if(score > 5000)return 7;
+		else if(score > 1000) return 6;
+		else return 5;
+		
+	}
 	
 }

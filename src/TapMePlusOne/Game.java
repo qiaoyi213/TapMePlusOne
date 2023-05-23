@@ -43,7 +43,8 @@ public class Game {
 	private boolean[][] vis;
 	private Pane pane;
 	Text score;
-	int life;
+	private int life;
+	
 	private ArrayList<Rectangle> lifeBar;
 	private boolean playing;
 	private Scene mainScene;
@@ -276,7 +277,6 @@ public class Game {
 		
 		sq.setOnFinished(e -> {
 			increaseLife();
-			
 			/*
 			Platform.runLater(() -> {
 				this.pad[x][y].setVal(Integer.parseInt(this.pad[x][y].getText())+1);
@@ -354,6 +354,7 @@ public class Game {
 		}
 		//showPad();
 		SequentialTransition st = new SequentialTransition();
+		
 		for(int i=5;i>=1;i--) {
 			for(int j=1;j<=5;j++) {
 				if(this.pad[i][j].getButtonNumber() == 0) {
@@ -427,7 +428,9 @@ public class Game {
 	}
 	
 	private void add_new_block(int x,int y) {
-		this.pad[x][y].setVal((int)(Math.random()*5)+1);
+		
+		this.pad[x][y].setVal((int)(Math.random()*RandomMatrix.maximumNumber(Integer.parseInt(this.score.getText())))+1);
+		
 		this.pad[x][y].setTranslateY(160);
 		this.pad[x][y].setTranslateX(30+110*(y-1));
 		this.pad[x][y].setVisible(true);
@@ -437,7 +440,7 @@ public class Game {
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
 				this.pad[i][j].setDisable(flag);
-				//this.pad[i][j].setOpacity(1);
+				this.pad[i][j].setOpacity(1);
 			}
 		}
 	}
@@ -531,7 +534,7 @@ public class Game {
 				e.printStackTrace();
 			}
 
-		    //showCloseButton();
+			//showCloseButton();
 	        resetGame();
 			Persistence.saveGame(this.pad, Integer.parseInt(this.score.getText()), this.life);
 	    });
@@ -563,7 +566,7 @@ public class Game {
 	    playing = false;
 	}
 
-
+	
 	public Scene getScene() {
 		return this.mainScene;
 	}
