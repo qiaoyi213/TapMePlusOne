@@ -234,9 +234,8 @@ public class Game {
 		if(counter < 3) {
 			disable_pad(false);
 			playing = false;
-			if(!isScan) {
-				decreaseLife();
-			}
+			decreaseLife();
+			
 			return false;
 		}
 		
