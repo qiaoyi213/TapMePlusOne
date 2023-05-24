@@ -234,7 +234,8 @@ public class Game {
 		if(counter < 3) {
 			disable_pad(false);
 			playing = false;
-			decreaseLife();
+			if(!isScan)
+				decreaseLife();
 			
 			return false;
 		}
@@ -275,7 +276,8 @@ public class Game {
 		}while(flag);
 		
 		sq.setOnFinished(e -> {
-			increaseLife();
+			if(isScan)
+				increaseLife();
 			/*
 			Platform.runLater(() -> {
 				this.pad[x][y].setVal(Integer.parseInt(this.pad[x][y].getText())+1);
@@ -480,14 +482,13 @@ public class Game {
 			System.out.println("GAME OVER");
 			showGameOver();
 		}
-        this.lifeBar.get(this.life).setVisible(false);
+        updateLife();
     }
 	private void increaseLife() {
 		if(this.life != 5) {
 			this.life++;
-			
-			this.lifeBar.get(this.life-1).setVisible(true);
 		}
+		
 	}
 	private void shufflePad() {
 		int[][] tmp = RandomMatrix.generate();
