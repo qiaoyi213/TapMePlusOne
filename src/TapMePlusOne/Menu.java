@@ -88,7 +88,23 @@ public class Menu {
             stage.setScene(helpScene);
             stage.show();
         });
-        
+        Button boardBtn = new Button("計分板");
+        boardBtn.setPrefSize(100, 50);
+        boardBtn.setLayoutX(250);
+        boardBtn.setLayoutY(750);
+        menuPane.getChildren().add(boardBtn);
+        boardBtn.setOnAction(event -> {
+        	try {
+				ScoreBoard sb = new ScoreBoard((Scene)this.getScene());
+				Stage stage = (Stage)this.getScene().getWindow();
+				Scene sbScene = sb.getScene();
+				stage.setScene(sbScene);
+				stage.show();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        });
         menuScene = new Scene(menuPane, 600, 1024);
     }
 	
