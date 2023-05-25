@@ -1,7 +1,9 @@
 package TapMePlusOne;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ public class ScoreWrapper {
 		}
 	}
 	public static ArrayList<Pair<String, Integer>>  getScoreBoard() throws Exception{
-		URL url = new URL("http://dreamlo.com/lb/646cd9ca8f40bb7d84eb1661/json");
+		URL url = new URL("http://dreamlo.com/lb/646cd9ca8f40bb7d84eb1661/json-asc");
 		URLConnection connection = url.openConnection();
 		String s = "";
 		try(BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
@@ -51,19 +53,30 @@ public class ScoreWrapper {
                 String score = (String) entry.get("score");
                 scoreboard.add(new Pair<String, Integer>(name, Integer.parseInt(score)));
             }
-            Collections.sort(scoreboard, new PairComparator());
+            //Collections.sort(scoreboard, new PairComparator());
             
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-
+		Collections.reverse(scoreboard);
         return scoreboard;	
     }
 	
-	private static class PairComparator implements Comparator<Pair<String, Integer>> {
-        @Override
-        public int compare(Pair<String, Integer> pair1, Pair<String, Integer> pair2) {
-            return pair1.getValue().compareTo(pair2.getValue());
-        }
-    }
+	public static boolean isExist(String username) throws Exception {
+		URL url = new URL("http://dreamlo.com/lb/646cd9ca8f40bb7d84eb1661/pipe-get/" + username);
+		URLConnection connection = url.openConnection();
+		String s = "";
+
+		try(BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
+			String line;
+			while((line = in.readLine()) != null) {
+				s += line;
+			}
+		}
+		if(s.equals("")) {
+			System.out.println("NULL");
+			return false;
+		}
+		return true;
+	}
 }
