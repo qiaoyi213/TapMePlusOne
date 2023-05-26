@@ -11,14 +11,17 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 public class TapMePlusOne extends Application{
+	
 	@Override
 	public void start(Stage primaryStage) throws MalformedURLException {
 		// Create the animation pane
+	
 	    Pane animationPane = new Pane();
 	    Scene animationScene = new Scene(animationPane, 600, 1024);
 	    primaryStage.setScene(animationScene);
 	    primaryStage.show();
 
+			
 	    // Create the media player
 	    File mediaFile = new File("resources/start_ver2.mp4");
 	    Media media = new Media(mediaFile.toURI().toURL().toString());
@@ -33,7 +36,15 @@ public class TapMePlusOne extends Application{
 
 	    // Switch to Menu after the video duration
 	    mediaPlayer.setOnEndOfMedia(() -> {
-	        primaryStage.setScene(new Menu().getScene());
+	    	Player player = new Player();
+			try {
+				player.readPlayer();
+				primaryStage.setScene(new Menu().getScene());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+
+		    	primaryStage.setScene(player.createPlayer());
+			}
 	    });
 	    /*
 	    primaryStage.setMaxWidth(600);
@@ -46,8 +57,8 @@ public class TapMePlusOne extends Application{
 		
 	}
 	public static void main(String[] args) {
-		
 		launch(args);
 	}
+	
 
 }

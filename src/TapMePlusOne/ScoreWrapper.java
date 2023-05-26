@@ -62,7 +62,7 @@ public class ScoreWrapper {
         return scoreboard;	
     }
 	
-	public static boolean isExist(String username) throws Exception {
+	public static void isExist(String username) throws Exception {
 		URL url = new URL("http://dreamlo.com/lb/646cd9ca8f40bb7d84eb1661/pipe-get/" + username);
 		URLConnection connection = url.openConnection();
 		String s = "";
@@ -72,11 +72,12 @@ public class ScoreWrapper {
 			while((line = in.readLine()) != null) {
 				s += line;
 			}
+		} catch(Exception e) {
+			throw e;
 		}
-		if(s.equals("")) {
-			System.out.println("NULL");
-			return false;
+		if(!s.equals("")) {
+			System.out.println("Exist");
+			throw new Exception();
 		}
-		return true;
 	}
 }
