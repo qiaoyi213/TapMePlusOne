@@ -504,8 +504,8 @@ public class Game {
 	private void increaseLife() {
 		if(this.life != 5) {
 			this.life++;
+			updateLife();
 		}
-		
 	}
 	private void shufflePad() {
 		int[][] tmp = RandomMatrix.generate();
