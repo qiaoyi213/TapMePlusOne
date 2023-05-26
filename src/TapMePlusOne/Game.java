@@ -43,8 +43,9 @@ public class Game {
 	private boolean[][] vis;
 	private Pane pane;
 	Text score;
+	Text bestScore;
 	private int life;
-	
+	private Player player;
 	private ArrayList<Rectangle> lifeBar;
 	private boolean playing;
 	private Scene mainScene;
@@ -58,7 +59,13 @@ public class Game {
         game_backgroundImageView.setFitWidth(600);
         game_backgroundImageView.setFitHeight(1024);
         this.pane.getChildren().add(game_backgroundImageView);
-        
+        player = new Player();
+        try {
+			player.readPlayer();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         moving = new Stack[7][7];
 		vis = new boolean[7][7];
 		
@@ -79,7 +86,7 @@ public class Game {
 		stopImageView.setFitWidth(50);
 		stopBtn.setGraphic(stopImageView);
 	    stopBtn.setOnAction(event -> {
-	        
+	    	
 	        Alert alert = new Alert(AlertType.CONFIRMATION);
 	        alert.setTitle("Stop");
 	        alert.setHeaderText(null);
@@ -101,7 +108,7 @@ public class Game {
 	    stopBtn.setTranslateY(30);
 	    pane.getChildren().add(stopBtn);
 	    
-	    Text aboveText = new Text("SCORE");
+	    Text aboveText = new Text("SCORE		最高分數");
 	    aboveText.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 30));
 	    aboveText.setFill(Paint.valueOf("WHITE")); 
 	    aboveText.setX(260);
@@ -124,6 +131,14 @@ public class Game {
 	    score.setX(290);
 	    score.setY(80);
 	    pane.getChildren().add(score);
+	    
+	    bestScore = new Text(Integer.toString(player.getScore()));
+	    bestScore.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 30));
+	    bestScore.setFill(Paint.valueOf("WHITE"));
+	    bestScore.setX(390);
+	    bestScore.setY(80);
+	    pane.getChildren().add(bestScore);
+	    
 	    
 		for(int i=1;i<=5;i++) {
 			for(int j=1;j<=5;j++) {
@@ -253,6 +268,8 @@ public class Game {
 			for(int j=1;j<=5;j++) {
 				if(vis[i][j]) {
 					this.score.setText(Integer.toString(Integer.parseInt(this.score.getText())+Integer.parseInt(this.pad[i][j].getText())));
+					player.updateScore(Integer.parseInt(this.score.getText()));
+					this.bestScore.setText(Integer.toString(player.getScore()));
 				}
 			}
 		}
@@ -514,7 +531,7 @@ public class Game {
 	    gameOverText.setX(120);
 	    gameOverText.setY(400);
 	    gameOverText.setId("gameOverText"); // 設定 ID 以便識別
-
+	    
 	    // 創建重新開始按鈕
 	    Button restartBtn = new Button("Restart");
 	    restartBtn.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 30));
@@ -538,7 +555,12 @@ public class Game {
 	        resetGame();
 			Persistence.saveGame(this.pad, Integer.parseInt(this.score.getText()), this.life);
 	    });
-
+	    try {
+			ScoreWrapper.addScore(player.getName(), player.getScore());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	    // 加入遊戲結束文字和重新開始按鈕到畫面
 	    pane.getChildren().addAll(gameOverText, restartBtn);
 	    

@@ -25,25 +25,12 @@ public class Menu {
 	public Menu(){
 		menuPane = new Pane();
 		// Background image
-
+		
         Image backgroundImage = new Image("file:resources/menuback.png");
         ImageView backgroundImageView = new ImageView(backgroundImage);
         backgroundImageView.setFitWidth(600);
         backgroundImageView.setFitHeight(1024);
         menuPane.getChildren().add(backgroundImageView);
-
-	    
-
-		// Title
-        /*
-        Text title = new Text("Tap +1");
-        title.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 68));
-        title.setX(150);
-        title.setY(250);
-        title.setFill(Paint.valueOf("WHITE"));    
-        menuPane.getChildren().add(title);
-        */
-        
         // Start button
         Button startBtn = new Button("開始");
         startBtn.setPrefSize(100, 50);
@@ -54,6 +41,7 @@ public class Menu {
         // Start button onClick event
         
         startBtn.setOnAction(event -> {
+
             Game game = new Game();
             Stage stage = (Stage) startBtn.getScene().getWindow();
             stage.setScene(game.getScene());
