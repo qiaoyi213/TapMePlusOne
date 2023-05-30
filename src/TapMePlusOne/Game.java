@@ -130,6 +130,7 @@ public class Game {
 	    score.setFill(Paint.valueOf("WHITE")); 
 	    score.setX(290);
 	    score.setY(80);
+	    
 	    pane.getChildren().add(score);
 	    
 	    bestScore = new Text(Integer.toString(player.getScore()));
