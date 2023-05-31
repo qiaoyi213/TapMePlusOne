@@ -26,17 +26,18 @@ public class Menu {
 		menuPane = new Pane();
 		// Background image
 		
-        Image backgroundImage = new Image("file:resources/menuback.png");
+        Image backgroundImage = new Image("file:resources/menu_ver3.png");
         ImageView backgroundImageView = new ImageView(backgroundImage);
         backgroundImageView.setFitWidth(600);
         backgroundImageView.setFitHeight(1024);
         menuPane.getChildren().add(backgroundImageView);
         // Start button
-        Button startBtn = new Button("開始");
-        startBtn.setPrefSize(100, 50);
+        Button startBtn = new Button("");
+        startBtn.setPrefSize(200, 50);
         startBtn.setLayoutX(250);
-        startBtn.setLayoutY(450);
-        startBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
+        startBtn.setLayoutY(400);
+        //startBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
+        startBtn.setStyle("-fx-background-color: transparent;");
         menuPane.getChildren().add(startBtn);
         // Start button onClick event
         
@@ -47,11 +48,12 @@ public class Menu {
             stage.setScene(game.getScene());
             stage.show();
         });
-        Button continueBtn = new Button("繼續");
-        continueBtn.setPrefSize(100, 50);
-        continueBtn.setLayoutX(250);
-        continueBtn.setLayoutY(350);
-        continueBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
+        Button continueBtn = new Button("");
+        continueBtn.setPrefSize(200, 50);
+        continueBtn.setLayoutX(200);
+        continueBtn.setLayoutY(325);
+        //continueBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
+        continueBtn.setStyle("-fx-background-color: transparent;");
         menuPane.getChildren().add(continueBtn);
         continueBtn.setOnAction(event -> {
         	Game game = new Game();
@@ -62,11 +64,12 @@ public class Menu {
             stage.show();
         });
         // Help button
-        Button helpBtn = new Button("教學");
-        helpBtn.setPrefSize(100, 50);
-        helpBtn.setLayoutX(250);
-        helpBtn.setLayoutY(550);
-        helpBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
+        Button helpBtn = new Button("");
+        helpBtn.setPrefSize(200, 50);
+        helpBtn.setLayoutX(200);
+        helpBtn.setLayoutY(475);
+        //helpBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
+        helpBtn.setStyle("-fx-background-color: transparent;");
         menuPane.getChildren().add(helpBtn);
     	// Help button onClick event
         helpBtn.setOnAction(event -> {
@@ -76,11 +79,12 @@ public class Menu {
             stage.setScene(helpScene);
             stage.show();
         });
-        Button boardBtn = new Button("計分板");
-        boardBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 14pt;");
-        boardBtn.setPrefSize(100, 50);
-        boardBtn.setLayoutX(250);
-        boardBtn.setLayoutY(750);
+        Button boardBtn = new Button("");
+        //boardBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 14pt;");
+        boardBtn.setStyle("-fx-background-color: transparent;");
+        boardBtn.setPrefSize(200, 50);
+        boardBtn.setLayoutX(200);
+        boardBtn.setLayoutY(550);
         menuPane.getChildren().add(boardBtn);
         boardBtn.setOnAction(event -> {
         	try {
@@ -99,40 +103,20 @@ public class Menu {
 	
 	private Scene createHelpScene() {
 		Pane helpPane = new Pane();
-	    Image backgroundImage = new Image("file:resources/game_ver2.png");
+	    Image backgroundImage = new Image("file:resources/guideback.png");
         ImageView help_backgroundImageView = new ImageView(backgroundImage);
         help_backgroundImageView.setFitWidth(600);
         help_backgroundImageView.setFitHeight(1024);
         //help_backgroundImageView.setPreserveRatio(true);
         helpPane.getChildren().add(help_backgroundImageView);
-	    Text helpText = new Text("App Guide");
-	    helpText.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 35));
-	    helpText.setFill(Paint.valueOf("WHITE"));  
-	    helpText.setX(220);
-	    helpText.setY(40);
-	    helpPane.getChildren().add(helpText);
 	    
 	    
-	    Text guideText = new Text("1. 點擊任一方塊，方塊+1 \n2. 消除三塊以上相同數字的方塊");
-	    guideText.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 16));
-	    guideText.setFill(Paint.valueOf("WHITE"));   
-	    guideText.setX(155);
-	    guideText.setY(680);
-	    helpPane.getChildren().add(guideText);
-	    
-	    
-	    ImageView imageView = new ImageView(new Image("file:resources/guide.png"));
-	    imageView.setLayoutX(150);
-	    imageView.setLayoutY(100);
-	    imageView.setFitWidth(300);
-	    imageView.setFitHeight(550);
-	    helpPane.getChildren().add(imageView);
-	    
-	    Button backButton = new Button("Back");
-	    backButton.setPrefSize(80, 40);
-	    backButton.setLayoutX(260);
-	    backButton.setLayoutY(750);
-	    backButton.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 16pt;");
+	    Button backButton = new Button("");
+	    backButton.setPrefSize(180, 40);
+	    backButton.setLayoutX(200);
+	    backButton.setLayoutY(720);
+	    //backButton.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 16pt;");
+	    backButton.setStyle("-fx-background-color: transparent;");
 	    helpPane.getChildren().add(backButton);
 
 	    // Back button onClick event
