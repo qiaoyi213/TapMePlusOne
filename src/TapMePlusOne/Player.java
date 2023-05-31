@@ -4,13 +4,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class Player {
 	private String name;
@@ -34,14 +40,26 @@ public class Player {
 		}
 	}
 	public Scene createPlayer() {
-		
 		Pane pane = new Pane();
-		TextField tf = new TextField();
-		pane.getChildren().add(tf);
-		
-		Button submitBtn = new Button();
-		submitBtn.setLayoutX(200);
-		submitBtn.setText("確定");
+        pane.setStyle("-fx-background-image: url('file:resources/menuback.png');-fx-background-size: cover;");
+
+        double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+        double halfWidth = screenWidth / 7;
+
+        TextField tf = new TextField();
+        tf.setStyle("-fx-border-color: #FF999A; -fx-border-width: 2px; -fx-border-radius: 5px;");
+        tf.setPrefWidth(halfWidth);
+        tf.setLayoutX(200);
+        tf.setLayoutY(400);
+        pane.getChildren().add(tf);
+
+        Button submitBtn = new Button("");
+        ImageView imageView = new ImageView(new Image("file:resources/enter.png"));
+        imageView.setFitWidth(75); // 設定圖片顯示寬度
+        imageView.setPreserveRatio(true); // 保持圖片比例
+        submitBtn.setGraphic(imageView); // 將圖片設為按鈕的圖形
+        submitBtn.setStyle("-fx-background-color: transparent;");
+
 		submitBtn.setOnAction(e -> {
 			if(isVaildNewPlayer(tf.getText())) {
 				this.name = tf.getText();
@@ -64,9 +82,11 @@ public class Player {
 				al.show();
 			}
 		});
-		pane.getChildren().add(submitBtn);
-		
-		return new Scene(pane, 600, 1024);
+		submitBtn.setLayoutX(255);
+        submitBtn.setLayoutY(450);
+        pane.getChildren().add(submitBtn);
+
+        return new Scene(pane, 600, 1024);
 	}
 	private boolean isVaildNewPlayer(String name) {
 		

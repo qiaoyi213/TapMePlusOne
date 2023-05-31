@@ -77,6 +77,7 @@ public class Menu {
             stage.show();
         });
         Button boardBtn = new Button("計分板");
+        boardBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 14pt;");
         boardBtn.setPrefSize(100, 50);
         boardBtn.setLayoutX(250);
         boardBtn.setLayoutY(750);

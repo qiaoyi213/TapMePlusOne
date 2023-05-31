@@ -82,9 +82,10 @@ public class Game {
 		Button stopBtn = new Button();
 		Image stopImage = new Image("file:resources/stop.png");
 		ImageView stopImageView = new ImageView(stopImage);
-		stopImageView.setFitHeight(50);
-		stopImageView.setFitWidth(50);
+		stopImageView.setFitHeight(40);
+		stopImageView.setFitWidth(40);
 		stopBtn.setGraphic(stopImageView);
+		stopBtn.setStyle("-fx-background-color: transparent;");
 	    stopBtn.setOnAction(event -> {
 	    	
 	        Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -104,8 +105,8 @@ public class Game {
 	        } 
 	    });
 
-	    stopBtn.setTranslateX(30);
-	    stopBtn.setTranslateY(30);
+	    stopBtn.setTranslateX(20);
+	    stopBtn.setTranslateY(20);
 	    pane.getChildren().add(stopBtn);
 	    
 	    Text aboveText = new Text("SCORE		最高分數");

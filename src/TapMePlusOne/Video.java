@@ -14,6 +14,8 @@ import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 
@@ -37,10 +39,14 @@ public class Video {
 		this.mediaPlayer.setOnStopped(() -> {
 			oldStage.setScene(oldScene);
 		});
-		closeButton = new Button("✕");
-		    closeButton.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 20));
-		    closeButton.setAlignment(Pos.TOP_RIGHT);
-		    closeButton.setOnAction(event -> {
+		closeButton = new Button("");
+		ImageView imageView = new ImageView(new Image("file:resources/close.png"));
+		imageView.setFitWidth(50); 
+        imageView.setPreserveRatio(true); 
+        closeButton.setGraphic(imageView);
+        closeButton.setStyle("-fx-background-color: transparent;");
+		closeButton.setAlignment(Pos.TOP_RIGHT);
+	    closeButton.setOnAction(event -> {
 		    	stop();
 		});
 		closeButton.setDisable(true);
