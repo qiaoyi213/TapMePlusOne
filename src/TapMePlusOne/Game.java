@@ -1,6 +1,5 @@
 package TapMePlusOne;
 import java.util.Queue;
-import java.util.Scanner;
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 import java.net.MalformedURLException;
@@ -90,7 +89,7 @@ public class Game {
 	    	
 	        Alert alert = new Alert(AlertType.CONFIRMATION);
 	        alert.setTitle("Stop");
-	        alert.setHeaderText(null);
+	        alert.setHeaderText("");
 	        alert.setContentText("Do you want to continue or go back?");
 
 	        ButtonType continueBtn = new ButtonType("continue");
@@ -379,8 +378,12 @@ public class Game {
 			for(int j=1;j<=5;j++) {
 				if(this.pad[i][j].getButtonNumber() == 0) {
 					this.pad[i][j].setVal((int)(Math.random()*6+1));
-					
-					add_new_block(i,j);
+					try {
+						add_new_block(i,j);
+					} catch(Exception e) {
+						System.out.println("ERROR");
+						e.printStackTrace();
+					}
 					for(int k=0;k<i;k++) {						
 						Timeline t = new Timeline();
 						t.setCycleCount(10);

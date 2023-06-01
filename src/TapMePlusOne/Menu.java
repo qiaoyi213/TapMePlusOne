@@ -74,9 +74,8 @@ public class Menu {
     	// Help button onClick event
         helpBtn.setOnAction(event -> {
             Stage stage = (Stage) helpBtn.getScene().getWindow();
-            // Create a new scene for the help page and set it as the current scene
-            Scene helpScene = createHelpScene();
-            stage.setScene(helpScene);
+            Help help = new Help(menuScene);
+            stage.setScene(help.getScene());
             stage.show();
         });
         Button boardBtn = new Button("");
@@ -100,36 +99,6 @@ public class Menu {
         });
         menuScene = new Scene(menuPane, 600, 1024);
     }
-	
-	private Scene createHelpScene() {
-		Pane helpPane = new Pane();
-	    Image backgroundImage = new Image("file:resources/guideback.png");
-        ImageView help_backgroundImageView = new ImageView(backgroundImage);
-        help_backgroundImageView.setFitWidth(600);
-        help_backgroundImageView.setFitHeight(1024);
-        //help_backgroundImageView.setPreserveRatio(true);
-        helpPane.getChildren().add(help_backgroundImageView);
-	    
-	    
-	    Button backButton = new Button("");
-	    backButton.setPrefSize(180, 40);
-	    backButton.setLayoutX(200);
-	    backButton.setLayoutY(720);
-	    //backButton.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 16pt;");
-	    backButton.setStyle("-fx-background-color: transparent;");
-	    helpPane.getChildren().add(backButton);
-
-	    // Back button onClick event
-	    backButton.setOnAction(event -> {
-	        Stage stage = (Stage) backButton.getScene().getWindow();
-	        // Set the menu scene as the current scene
-	        stage.setScene(menuScene);
-	        stage.show();
-	    });
-
-	    Scene helpScene = new Scene(helpPane, 600, 1024);
-	    return helpScene;
-	}
 	
 	public Scene getScene() {
 		return this.menuScene;
