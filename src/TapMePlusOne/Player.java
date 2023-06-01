@@ -41,7 +41,13 @@ public class Player {
 	}
 	public Scene createPlayer() {
 		Pane pane = new Pane();
-        pane.setStyle("-fx-background-image: url('file:resources/user.png');-fx-background-size: cover;");
+
+        Image backgroundImage = new Image("file:resources/user.png");
+        ImageView backgroundImageView = new ImageView(backgroundImage);
+        backgroundImageView.setFitWidth(600);
+        backgroundImageView.setFitHeight(1024);
+        pane.getChildren().add(backgroundImageView);
+        //pane.setStyle("-fx-background-image: url('file:resources/user.png');-fx-background-size: cover;");
 
         double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
         double halfWidth = screenWidth / 7;

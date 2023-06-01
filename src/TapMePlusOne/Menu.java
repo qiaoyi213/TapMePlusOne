@@ -33,9 +33,9 @@ public class Menu {
         menuPane.getChildren().add(backgroundImageView);
         // Start button
         Button startBtn = new Button("");
-        startBtn.setPrefSize(200, 50);
-        startBtn.setLayoutX(250);
-        startBtn.setLayoutY(400);
+        startBtn.setPrefSize(220, 50);
+        startBtn.setLayoutX(200);
+        startBtn.setLayoutY(425);
         //startBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
         startBtn.setStyle("-fx-background-color: transparent;");
         menuPane.getChildren().add(startBtn);
@@ -49,9 +49,9 @@ public class Menu {
             stage.show();
         });
         Button continueBtn = new Button("");
-        continueBtn.setPrefSize(200, 50);
+        continueBtn.setPrefSize(220, 50);
         continueBtn.setLayoutX(200);
-        continueBtn.setLayoutY(325);
+        continueBtn.setLayoutY(350);
         //continueBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
         continueBtn.setStyle("-fx-background-color: transparent;");
         menuPane.getChildren().add(continueBtn);
@@ -65,9 +65,9 @@ public class Menu {
         });
         // Help button
         Button helpBtn = new Button("");
-        helpBtn.setPrefSize(200, 50);
+        helpBtn.setPrefSize(220, 50);
         helpBtn.setLayoutX(200);
-        helpBtn.setLayoutY(475);
+        helpBtn.setLayoutY(500);
         //helpBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20pt;");
         helpBtn.setStyle("-fx-background-color: transparent;");
         menuPane.getChildren().add(helpBtn);
@@ -82,9 +82,9 @@ public class Menu {
         Button boardBtn = new Button("");
         //boardBtn.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 14pt;");
         boardBtn.setStyle("-fx-background-color: transparent;");
-        boardBtn.setPrefSize(200, 50);
+        boardBtn.setPrefSize(220, 50);
         boardBtn.setLayoutX(200);
-        boardBtn.setLayoutY(550);
+        boardBtn.setLayoutY(575);
         menuPane.getChildren().add(boardBtn);
         boardBtn.setOnAction(event -> {
         	try {
