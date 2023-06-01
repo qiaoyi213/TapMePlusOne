@@ -33,7 +33,13 @@ public class TButton extends Button{
 	}
 	
 	public void setVal(int val) {
-		this.setText(Integer.toString(val));
+		try {
+			this.setText(Integer.toString(val));
+		} catch(Exception e) {
+			System.out.print("AAAA");
+			e.printStackTrace();
+		}
+		
 		updateColor();
 	}
 	
