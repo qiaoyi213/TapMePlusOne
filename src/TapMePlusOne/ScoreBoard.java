@@ -53,16 +53,17 @@ public class ScoreBoard {
         ArrayList<Pair<String, Integer>> board = ScoreWrapper.getScoreBoard();
         VBox vb = new VBox();
         vb.setPrefWidth(600);
+        vb.setPrefHeight(200);
         for (int i = 0; i < board.size(); i++) {
             HBox hb = new HBox();
             Text name = new Text(board.get(i).getKey());
-            name.setX(50);
-            name.setY(50 * i + 100);
+            name.setX(250);
+            name.setY(250 * i + 100);
             name.setFill(Color.WHITE);
             name.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 20)); 
             Text score = new Text(board.get(i).getValue().toString());
-            score.setX(100);
-            score.setY(50 * i + 100);
+            score.setX(400);
+            score.setY(250 * i + 100);
             score.setFill(Color.WHITE); 
             score.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 20));
             hb.getChildren().add(score);
