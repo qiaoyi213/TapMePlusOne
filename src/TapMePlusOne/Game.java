@@ -53,7 +53,7 @@ public class Game {
 
 	public Game(){
 		this.pane = new Pane();
-		Image gamebackgroundImage = new Image("file:resources/game_ver2.png");
+		Image gamebackgroundImage = new Image("file:resources/game_background.png");
         ImageView game_backgroundImageView = new ImageView(gamebackgroundImage);
         game_backgroundImageView.setFitWidth(600);
         game_backgroundImageView.setFitHeight(1024);
@@ -108,14 +108,6 @@ public class Game {
 	    stopBtn.setTranslateY(20);
 	    pane.getChildren().add(stopBtn);
 	    
-	    Text aboveText = new Text("SCORE		最高分數");
-	    aboveText.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 30));
-	    aboveText.setFill(Paint.valueOf("WHITE")); 
-	    aboveText.setX(260);
-	    aboveText.setY(30);
-	    pane.getChildren().add(aboveText);
-	
-	    
 		this.pad = new TButton[7][7];		
 
 		for(int i=1;i<=5;i++) {
@@ -129,15 +121,15 @@ public class Game {
 	    score.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 30));
 	    score.setFill(Paint.valueOf("WHITE")); 
 	    score.setX(290);
-	    score.setY(80);
+	    score.setY(70);
 	    
 	    pane.getChildren().add(score);
 	    
 	    bestScore = new Text(Integer.toString(player.getScore()));
 	    bestScore.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 30));
 	    bestScore.setFill(Paint.valueOf("WHITE"));
-	    bestScore.setX(390);
-	    bestScore.setY(80);
+	    bestScore.setX(490);
+	    bestScore.setY(70);
 	    pane.getChildren().add(bestScore);
 	    
 	    
