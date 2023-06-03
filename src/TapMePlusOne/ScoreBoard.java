@@ -2,11 +2,18 @@ package TapMePlusOne;
 
 import java.util.ArrayList;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -25,17 +32,8 @@ public class ScoreBoard {
 	private Scene scene;
 	public ScoreBoard(Scene oldScene) throws Exception {
 		this.oldScene = oldScene;
-
-		Group g = new Group();
-		ScrollPane scrollPane = new ScrollPane();
-		scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
-
-        StackPane contentPane = new StackPane(); // 使用 StackPane 作為 ScrollPane 的內容
-
-        ImageView background = new ImageView(new Image("file:resources/game_ver2.png"));
-        background.setFitWidth(600);
-        background.setFitHeight(1024);
-
+		Pane pane = new Pane();
+		pane.setStyle("-fx-background-image: url(\"file:resources/game_ver2.png\")");
         Button exitBtn = new Button("");
         ImageView imageView = new ImageView(new Image("file:resources/close.png"));
         imageView.setFitWidth(50);
@@ -49,35 +47,35 @@ public class ScoreBoard {
             stage.setScene(oldScene);
             stage.show();
         });
-
-        ArrayList<Pair<String, Integer>> board = ScoreWrapper.getScoreBoard();
-        VBox vb = new VBox();
-        vb.setPrefWidth(600);
-        vb.setPrefHeight(200);
-        for (int i = 0; i < board.size(); i++) {
-            HBox hb = new HBox();
-            Text name = new Text(board.get(i).getKey());
-            name.setX(250);
-            name.setY(250 * i + 100);
-            name.setFill(Color.WHITE);
-            name.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 20)); 
-            Text score = new Text(board.get(i).getValue().toString());
-            score.setX(400);
-            score.setY(250 * i + 100);
-            score.setFill(Color.WHITE); 
-            score.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 20));
-            hb.getChildren().add(score);
-            hb.getChildren().add(name);
-
-            vb.getChildren().add(hb);
+        pane.getChildren().add(exitBtn);
+        
+		
+		TableView board = new TableView();
+		board.setStyle("-fx-font-size: 20px;-fx-alignment: center;");
+		
+		board.setLayoutY(50);
+		board.setPrefSize(600, 900);
+		ArrayList<Pair<String, Integer>> scoreList = ScoreWrapper.getScoreBoard();
+        for (int i = 0; i < scoreList.size(); i++) {
+        	board.getItems().add(scoreList.get(i));
         }
+        
+		TableColumn<Pair<String,Integer>, String> keyCol = new TableColumn<>("暱稱");
+		keyCol.setStyle("-fx-alignment: center;");
+		keyCol.setPrefWidth(300);
+		keyCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getKey()));
 
-        contentPane.getChildren().addAll(background, vb);
-        scrollPane.setContent(contentPane);
-        scrollPane.setLayoutY(0);
-        g.getChildren().addAll(scrollPane, exitBtn);
+		TableColumn<Pair<String, Integer>, Integer> valCol = new TableColumn<>("分數");
+		valCol.setStyle("-fx-alignment: center;");
+		valCol.setPrefWidth(300);
+		valCol.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getValue()));
+		
+		board.getColumns().addAll(keyCol,valCol);
+		pane.getChildren().add(board);
+		
+		scene = new Scene(pane, 600, 1024);
 
-        scene = new Scene(g, 600, 1024);
+
 	}
 	public Scene getScene() {
 		return this.scene;
