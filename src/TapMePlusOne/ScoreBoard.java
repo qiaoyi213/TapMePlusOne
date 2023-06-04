@@ -52,7 +52,6 @@ public class ScoreBoard {
 		
 		TableView board = new TableView();
 		board.setStyle("-fx-font-size: 20px;-fx-alignment: center;");
-		
 		board.setLayoutY(50);
 		board.setPrefSize(600, 900);
 		ArrayList<Pair<String, Integer>> scoreList = ScoreWrapper.getScoreBoard();
@@ -61,15 +60,15 @@ public class ScoreBoard {
         }
         
 		TableColumn<Pair<String,Integer>, String> keyCol = new TableColumn<>("暱稱");
-		keyCol.setStyle("-fx-alignment: center;");
+		keyCol.setStyle("-fx-alignment: center; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS'; -fx-background-color: #0C1252; ");
 		keyCol.setPrefWidth(300);
 		keyCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getKey()));
 
 		TableColumn<Pair<String, Integer>, Integer> valCol = new TableColumn<>("分數");
-		valCol.setStyle("-fx-alignment: center;");
+		valCol.setStyle("-fx-alignment: center; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS'; -fx-background-color: #0C1252;");
 		valCol.setPrefWidth(300);
 		valCol.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getValue()));
-		
+
 		board.getColumns().addAll(keyCol,valCol);
 		pane.getChildren().add(board);
 		
