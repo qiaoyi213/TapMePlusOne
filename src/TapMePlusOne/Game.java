@@ -417,7 +417,7 @@ public class Game {
 						while(flag) {
 							if(playing == false) {
 								b[i][j] = bfs(i,j,true);
-								break;
+								break;	
 							}
 							try {
 								Thread.sleep(100);
