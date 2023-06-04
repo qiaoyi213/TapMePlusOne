@@ -51,9 +51,14 @@ public class ScoreBoard {
         
 		
 		TableView board = new TableView();
+		ScrollPane scrollPane = new ScrollPane(board);
+		scrollPane.setFitToHeight(true);
+		scrollPane.setLayoutY(50);
 		board.setStyle("-fx-font-size: 20px;-fx-alignment: center;");
 		board.setLayoutY(50);
-		board.setPrefSize(600, 900);
+		board.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+		board.setPrefSize(600,800);
+		
 		ArrayList<Pair<String, Integer>> scoreList = ScoreWrapper.getScoreBoard();
         for (int i = 0; i < scoreList.size(); i++) {
         	board.getItems().add(scoreList.get(i));
@@ -70,7 +75,7 @@ public class ScoreBoard {
 		valCol.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getValue()));
 
 		board.getColumns().addAll(keyCol,valCol);
-		pane.getChildren().add(board);
+		pane.getChildren().add(scrollPane);
 		
 		scene = new Scene(pane, 600, 1024);
 
