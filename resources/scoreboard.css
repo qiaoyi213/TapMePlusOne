@@ -1,0 +1,27 @@
+.root {
+    -fx-background-image: url("file:resources/game_ver2.png");
+}
+
+.exit-button {
+    -fx-background-color: transparent;
+}
+
+.table-view {
+    -fx-font-size: 20px;
+    -fx-alignment: center;
+}
+
+.scroll-pane {
+    -fx-fit-to-height: true;
+}
+
+.table-column {
+    -fx-alignment: center;
+    -fx-text-fill: white;
+    -fx-font-family: 'Comic Sans MS';
+}
+
+.table-header {
+    -fx-background-color: #0C1252;
+    -fx-text-fill: white;
+}
