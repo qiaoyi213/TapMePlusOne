@@ -1,27 +1,26 @@
 .root {
-    -fx-background-image: url("file:resources/game_ver2.png");
-}
-
-.exit-button {
-    -fx-background-color: transparent;
+	-fx-background-color: #0C1252;
 }
 
 .table-view {
-    -fx-font-size: 20px;
+    -fx-font-size: 25px;
     -fx-alignment: center;
 }
 
-.scroll-pane {
-    -fx-fit-to-height: true;
+.table-view .column-header-background{
+    -fx-background-color: #0C1252;
 }
 
-.table-column {
-    -fx-alignment: center;
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
     -fx-text-fill: white;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
     -fx-font-family: 'Comic Sans MS';
 }
 
-.table-header {
-    -fx-background-color: #0C1252;
-    -fx-text-fill: white;
+.table-view .table-cell {
+	-fx-alignment: center;
 }

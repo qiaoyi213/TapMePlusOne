@@ -53,6 +53,8 @@ public class ScoreBoard {
 		
 		TableView board = new TableView();
 		ScrollPane scrollPane = new ScrollPane(board);
+		board.getStylesheets().add("file:resources/scoreboard.css");
+		
 		scrollPane.getStyleClass().add("scroll-pane");
 		scrollPane.setFitToHeight(true);
 		scrollPane.setLayoutY(50);
@@ -80,7 +82,6 @@ public class ScoreBoard {
 		pane.getChildren().add(scrollPane);
 		
 		scene = new Scene(pane, 600, 1024);
-		scene.getStylesheets().add("file:resources/scoreboard.css");
 
 
 
