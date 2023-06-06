@@ -14,6 +14,7 @@
 .table-view .column-header-background .label{
     -fx-background-color: transparent;
     -fx-text-fill: white;
+    -fx-font-family: 'cwTeXYen';
 }
 
 .table-view .column-header {
@@ -22,5 +23,11 @@
 }
 
 .table-view .table-cell {
-	-fx-alignment: center;
+    -fx-alignment: center;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: 'Comic Sans MS';
 }
+.table-view .table-row-cell {
+    -fx-background-color: #0C1252;
+}
+
