@@ -85,6 +85,7 @@ public class Player {
 		        
 			} else {
 				Alert al = new Alert(AlertType.WARNING);
+				al.setHeaderText("該名稱已經有人使用過了！");
 				al.show();
 			}
 		});
