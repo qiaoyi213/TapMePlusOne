@@ -1,4 +1,4 @@
-[繁體中文]()
+[繁體中文](https://github.com/qiaoyi213/TapMePlusOne/blob/dev/README.md) [English](https://github.com/qiaoyi213/TapMePlusOne/blob/dev/README_EN.md)
 # 點我加一
 點我加一，一款數字益智遊戲，使用點擊來消除方塊，非常好殺時間。
 這款遊戲也作為 111 學年度中央大學計算計概論二的期末專案，使用 Java 與 JavaFX 製作而成。
