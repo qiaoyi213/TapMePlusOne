@@ -18,7 +18,12 @@ import javafx.util.Pair;
 
 public class ScoreWrapper {
 	public static void addScore(String name, int score) throws Exception {
-		URL url = new URL("http://dreamlo.com/lb/tBbk3tuYh0edXkoDajxGegXusmwaLIdk2JXLmarAyEkg/add/" + name + "/" + Integer.toString(score));
+		
+		String token = TokenWrapper.getToken();
+		if(token == "") {
+			return;
+		}
+		URL url = new URL("http://dreamlo.com/lb/"+ token +"/add/" + name + "/" + Integer.toString(score));
 		URLConnection connection = url.openConnection();
 		try(BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
 			String line;
