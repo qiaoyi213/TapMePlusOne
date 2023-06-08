@@ -520,6 +520,7 @@ public class Game {
 	}
 	public void showGameOver() {
 	    // 創建 Game Over 文字
+		disable_pad(true);
 	    Text gameOverText = new Text("GAME OVER");
 	    gameOverText.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 60));
 	    gameOverText.setFill(Color.RED);
@@ -551,6 +552,7 @@ public class Game {
 			//showCloseButton();
 	        resetGame();
 			Persistence.saveGame(this.pad, Integer.parseInt(this.score.getText()), this.life);
+			disable_pad(false);
 	    });
 	    try {
 			ScoreWrapper.addScore(player.getName(), player.getScore());
